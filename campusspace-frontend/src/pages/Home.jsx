@@ -2,6 +2,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import CTABanner from "../components/CTABanner";
 import Feature from "../components/Feature";
 import Footer from "../components/Footer";
@@ -38,9 +39,11 @@ const Home = () => {
             Reviews
           </li>
 
-          <button className="h-10 rounded-[10px] bg-blue-950 px-6 text-white transition-all duration-300 hover:opacity-70">
-            Get Started
-          </button>
+          <Link to={"/register"}>
+            <button className="h-10 rounded-[10px] bg-blue-950 px-4 text-white transition-all duration-300 hover:opacity-70">
+              Get Started
+            </button>
+          </Link>
         </ul>
         <SnNav menuClick={menuClick} setMenuClick={setMenuClick} />
 
