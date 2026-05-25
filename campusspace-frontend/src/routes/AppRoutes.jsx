@@ -1,6 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardLayout from "../layout/DashboardLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import Bookings from "../pages/dashboard/Bookings";
+import Events from "../pages/dashboard/Events";
+import RoomDetails from "../pages/dashboard/RoomDetails";
+import Rooms from "../pages/dashboard/Rooms";
+import Settings from "../pages/dashboard/Settings";
 import Home from "../pages/Home";
 import AdminRoute from "./AdminRoute";
 import ProtectedRoute from "./ProtectedRoute";
@@ -9,13 +14,6 @@ import ForgotPassword from "../pages/Auth/ForgotPassword";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
-
-/* import Bookings from "../pages/dashboard/Bookings";
-
-import Events from "../pages/dashboard/Events";
-import RoomDetails from "../pages/dashboard/RoomDetails";
-import Rooms from "../pages/dashboard/Rooms";
-import Settings from "../pages/dashboard/Settings"; */
 
 /* 
 import ManageBookings from "../pages/admin/ManageBookings";
@@ -46,7 +44,7 @@ const AppRoutes = () => {
         >
           <Route index element={<Dashboard />} />
 
-          {/*   <Route path="rooms" element={<Rooms />} />
+          <Route path="rooms" element={<Rooms />} />
 
           <Route path="rooms/:id" element={<RoomDetails />} />
 
@@ -54,7 +52,7 @@ const AppRoutes = () => {
 
           <Route path="events" element={<Events />} />
 
-          <Route path="settings" element={<Settings />} /> */}
+          <Route path="settings" element={<Settings />} />
         </Route>
 
         {/* ADMIN DASHBOARD */}

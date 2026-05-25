@@ -50,8 +50,9 @@ const Home = () => {
         {/* Icons */}
         <div className="flex items-center gap-4">
           <NotificationsIcon className="hidden cursor-pointer md:block" />
-
-          <PersonIcon className="hidden cursor-pointer md:blockr" />
+          <Link to={"/dashboard"}>
+            <PersonIcon className="hidden cursor-pointer md:blockr" />
+          </Link>
           <MenuIcon
             className="cursor-pointer md:hidden"
             onClick={handleMenuClick}

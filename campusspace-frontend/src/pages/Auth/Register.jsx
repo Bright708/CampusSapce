@@ -23,9 +23,12 @@ const Register = () => {
     e.preventDefault();
 
     const result = await signUp(formData);
+    console.log(result);
 
     if (result.success) {
-      navigate("/dashboard");
+      alert("Account created successfully!");
+
+      navigate("/login");
     } else {
       alert(result.message);
     }

@@ -3,128 +3,171 @@ import { create } from "zustand";
 import { supabase } from "../lib/supabase";
 
 const useAuthStore = create((set) => ({
-    user: null,
+  user: null,
 
-    session: null,
+  session: null,
 
-    role: null,
+  role: null,
 
-    loading: false,
+  loading: false,
 
-    // REGISTER
-    signUp: async({ email, password, full_name, role }) => {
-        set({ loading: true });
+  profile: null,
 
-        try {
-            // Create auth user
-            const { data, error } = await supabase.auth.signUp({
-                email,
-                password,
-            });
+  // REGISTER
 
-            if (error) throw error;
+  signUp: async ({ email, password, full_name, role }) => {
+    set({
+      loading: true,
+    });
 
-            // Insert profile
-            const { error: profileError } = await supabase.from("profiles").insert([{
-                id: data.user.id,
-                email,
-                full_name,
-                role,
-            }, ]);
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
 
-            if (profileError) throw profileError;
+        options: {
+          data: {
+            full_name,
+            role,
+          },
+        },
+      });
 
-            set({
-                user: data.user,
-                session: data.session,
-                role,
-            });
+      if (error) {
+        throw error;
+      }
 
-            return {
-                success: true,
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: error.message,
-            };
-        } finally {
-            set({ loading: false });
-        }
-    },
+      set({
+        user: data.user,
+        session: data.session,
+      });
 
-    // LOGIN
-    signIn: async({ email, password }) => {
-        set({ loading: true });
+      return {
+        success: true,
+      };
+    } catch (error) {
+      console.log(error);
 
-        try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            });
+      return {
+        success: false,
+        message: error.message,
+      };
+    } finally {
+      set({
+        loading: false,
+      });
+    }
+  },
 
-            if (error) throw error;
+  // LOGIN
 
-            // Fetch profile
-            const { data: profile } = await supabase
-                .from("profiles")
-                .select("*")
-                .eq("id", data.user.id)
-                .single();
+  signIn: async ({ email, password }) => {
+    set({
+      loading: true,
+    });
 
-            set({
-                user: data.user,
-                session: data.session,
-                role: profile.role,
-            });
+    try {
+      // LOGIN USER
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-            return {
-                success: true,
-                role: profile.role,
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: error.message,
-            };
-        } finally {
-            set({ loading: false });
-        }
-    },
+      if (error) {
+        throw error;
+      }
 
-    // LOGOUT
-    signOut: async() => {
-        await supabase.auth.signOut();
+      // FETCH PROFILE
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", data.user.id)
+        .maybeSingle();
 
-        set({
-            user: null,
-            session: null,
-            role: null,
-        });
-    },
+      console.log(profile);
+      console.log(profileError);
 
-    // CHECK AUTH
-    checkAuth: async() => {
-        const {
-            data: { session },
-        } = await supabase.auth.getSession();
+      if (profileError) {
+        console.log(profileError);
+        console.log("PROFILE FETCH ERROR:", profileError);
 
-        if (!session) return;
+        throw profileError;
+      }
 
-        const user = session.user;
+      // STORE USER
+      set({
+        user: data.user,
+        session: data.session,
+        role: profile ? profile.role : null,
+        profile,
+      });
 
-        const { data: profile } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("id", user.id)
-            .single();
+      return {
+        success: true,
+        role: profile ? profile.role : null,
+      };
+    } catch (error) {
+      console.log(error);
 
-        set({
-            user,
-            session,
-            role: profile.role,
-        });
-    },
+      return {
+        success: false,
+        message: error.message,
+      };
+    } finally {
+      set({
+        loading: false,
+      });
+    }
+  },
+
+  // LOGOUT
+
+  signOut: async () => {
+    await supabase.auth.signOut();
+
+    set({
+      user: null,
+      session: null,
+      role: null,
+      profile: null,
+    });
+  },
+
+  // CHECK AUTH
+
+  checkAuth: async () => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    // NO SESSION
+    if (!session) {
+      set({
+        user: null,
+        session: null,
+        role: null,
+        profile: null,
+      });
+
+      return;
+    }
+
+    const user = session.user;
+
+    // GET PROFILE
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    set({
+      user,
+      session,
+      role: profile ? profile.role : "student",
+      profile,
+    });
+  },
 }));
 
 export default useAuthStore;

@@ -2,9 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 import useAuthStore from "../../store/authStore";
-
 
 import JQB from "../../../public/JQBimg.jpg";
 
@@ -18,10 +16,13 @@ const Login = () => {
     password: "",
   });
 
+  // HANDLE LOGIN
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const result = await signIn(formData);
+
+    console.log("RESULT:", JSON.stringify(result));
 
     if (result.success) {
       if (result.role === "admin") {
@@ -55,17 +56,14 @@ const Login = () => {
 
         {/* Content */}
         <div className="absolute z-10 flex h-full flex-col justify-center gap-8 px-16 text-white">
-          {/* Logo */}
           <h1 className="text-4xl font-bold">CampusSpace</h1>
 
-          {/* Heading */}
           <h2 className="text-5xl font-bold leading-tight">
             Simplify your
             <br />
             Campus Journey
           </h2>
 
-          {/* Description */}
           <p className="max-w-xl text-lg leading-relaxed text-blue-100">
             The centralized platform for students to find study spaces, book
             resources, and navigate university life with ease.
@@ -80,19 +78,19 @@ const Login = () => {
         transition={{ duration: 0.8 }}
         className="flex items-center justify-center px-4 py-10 sm:px-8 lg:px-16"
       >
-        {/* FORM CONTAINER */}
+        {/* FORM */}
         <form
           onSubmit={handleSubmit}
           className="flex w-full max-w-md flex-col gap-6 rounded-3xl bg-white p-8 shadow-xl"
         >
-          {/* Mobile Branding */}
+          {/* MOBILE BRANDING */}
           <div className="flex flex-col gap-2 lg:hidden">
             <h1 className="text-3xl font-bold text-blue-950">CampusSpace</h1>
 
             <p className="text-gray-600">Simplify your campus journey.</p>
           </div>
 
-          {/* Heading */}
+          {/* HEADING */}
           <div className="flex flex-col gap-3">
             <h1 className="text-3xl font-bold text-blue-950 sm:text-4xl">
               Sign In
@@ -103,7 +101,7 @@ const Login = () => {
             </p>
           </div>
 
-          {/* Email */}
+          {/* EMAIL */}
           <div className="flex flex-col gap-2">
             <label htmlFor="email" className="font-semibold text-blue-950">
               University Email
@@ -121,10 +119,11 @@ const Login = () => {
                 })
               }
               className="h-14 rounded-xl bg-[#f3f4f6] px-4 outline-none transition-all duration-300 focus:scale-[1.01] focus:ring-2 focus:ring-blue-950"
+              required
             />
           </div>
 
-          {/* Password */}
+          {/* PASSWORD */}
           <div className="flex flex-col gap-2">
             <label htmlFor="password" className="font-semibold text-blue-950">
               Password
@@ -142,10 +141,11 @@ const Login = () => {
                 })
               }
               className="h-14 rounded-xl bg-[#f3f4f6] px-4 outline-none transition-all duration-300 focus:scale-[1.01] focus:ring-2 focus:ring-blue-950"
+              required
             />
           </div>
 
-          {/* Remember + Forgot */}
+          {/* REMEMBER + FORGOT */}
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <input type="checkbox" className="h-4 w-4" />
@@ -160,14 +160,10 @@ const Login = () => {
             </Link>
           </div>
 
-          {/* Submit */}
+          {/* SUBMIT BUTTON */}
           <motion.button
-            whileHover={{
-              scale: 1.02,
-            }}
-            whileTap={{
-              scale: 0.98,
-            }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             disabled={loading}
             type="submit"
             className="h-14 rounded-xl bg-blue-950 text-lg font-semibold text-white transition-all duration-300 hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-60"
@@ -175,7 +171,7 @@ const Login = () => {
             {loading ? "Signing In..." : "Sign In"}
           </motion.button>
 
-          {/* Redirect */}
+          {/* REDIRECT */}
           <p className="text-center text-gray-600">
             Don't have an account?{" "}
             <Link to="/register">
