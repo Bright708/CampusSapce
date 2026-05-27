@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import useAuthStore from "../../store/authStore";
+import useAuthStore from "../../store/authstore";
 
 const MobileSidebar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();

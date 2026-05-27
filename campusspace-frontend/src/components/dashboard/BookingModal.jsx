@@ -4,7 +4,7 @@ import Modal from "react-modal";
 
 import { motion } from "framer-motion";
 
-import useAuthStore from "../../store/authStore";
+import useAuthStore from "../../store/authstore";
 
 import { createBooking } from "../../services/bookingServices";
 
@@ -14,6 +14,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
   const user = useAuthStore((state) => state.user);
 
   const [bookingDate, setBookingDate] = useState("");
+  const [eventTitle, setEventTitle] = useState("");
 
   const [startTime, setStartTime] = useState("");
 
@@ -50,6 +51,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
         booking_date: bookingDate,
         start_time: startTime,
         end_time: endTime,
+        event_title: eventTitle,
       };
 
       const response = await createBooking(bookingData);
@@ -61,6 +63,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
         setBookingDate("");
         setStartTime("");
         setEndTime("");
+        setEventTitle("");
 
         // CLOSE AFTER DELAY
         setTimeout(() => {
@@ -68,7 +71,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
         }, 1500);
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Booking failed");
+      setError(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }
@@ -133,6 +136,13 @@ const BookingModal = ({ isOpen, onClose, room }) => {
               className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
             />
           </div>
+          <input
+            type="text"
+            placeholder="Event Title"
+            value={eventTitle}
+            onChange={(e) => setEventTitle(e.target.value)}
+            className="h-12 rounded-xl border px-4"
+          />
 
           {/* TIMES */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

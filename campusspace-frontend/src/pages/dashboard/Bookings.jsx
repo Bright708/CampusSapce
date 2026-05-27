@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { cancelBooking, getUserBookings } from "../../services/bookingServices";
 
-import useAuthStore from "../../store/authStore";
+import useAuthStore from "../../store/authstore";
 
 import { motion } from "framer-motion";
 
@@ -12,6 +12,10 @@ const Bookings = () => {
   const [bookings, setBookings] = useState([]);
 
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    useAuthStore.getState().checkAuth();
+  }, []);
 
   // FETCH BOOKINGS
 

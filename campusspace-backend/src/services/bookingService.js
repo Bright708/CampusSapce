@@ -1,68 +1,133 @@
 import supabase from "../config/supabase.js";
 
-export const createBookingService = async(bookingData) => {
-    const { data, error } = await supabase
-        .from("bookings")
-        .insert([bookingData])
-        .select();
+// CREATE BOOKING
+export const createBookingService = async (bookingData) => {
+  const { user_id, room_id, booking_date, start_time, end_time, event_title } =
+    bookingData;
 
-    if (error) {
-        throw new Error(error.message);
-    }
+  // CHECK EXISTING BOOKINGS
+  const { data: existingBookings, error: bookingError } = await supabase
+    .from("bookings")
+    .select("*")
+    .eq("room_id", room_id)
+    .eq("booking_date", booking_date)
+    .in("status", ["pending", "approved"]);
 
-    return data;
+  if (bookingError) {
+    throw bookingError;
+  }
+
+  // OVERLAP CHECK
+  const hasOverlap = existingBookings.some((booking) => {
+    return start_time < booking.end_time && end_time > booking.start_time;
+  });
+
+  if (hasOverlap) {
+    throw new Error("Room already booked for this time slot");
+  }
+
+  // CREATE BOOKING
+  const { data, error } = await supabase
+    .from("bookings")
+    .insert([
+      {
+        user_id,
+        room_id,
+        booking_date,
+        start_time,
+        end_time,
+        event_title,
+        status: "pending",
+      },
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    throw error;
+  }
+
+  return data;
 };
 
-export const getAllBookingsService = async() => {
-    const { data, error } = await supabase
-        .from("bookings")
-        .select(
-            `
+// GET ALL BOOKINGS
+export const getAllBookingsService = async () => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      `
       *,
-      profiles(full_name, email),
-      rooms(name, building)
+      profiles(full_name,email),
+      rooms(name,building)
     `,
-        )
-        .order("created_at", { ascending: false });
+    )
+    .order("created_at", {
+      ascending: false,
+    });
 
-    if (error) {
-        throw new Error(error.message);
-    }
+  if (error) {
+    throw error;
+  }
 
-    return data;
+  return data;
 };
-export const updateBookingStatusService = async(id, status, admin_notes) => {
-    const { data, error } = await supabase
-        .from("bookings")
-        .update({
-            status,
-            admin_notes,
-        })
-        .eq("id", id)
-        .select();
 
-    if (error) {
-        throw new Error(error.message);
-    }
+// UPDATE STATUS
+export const updateBookingStatusService = async (id, status, admin_notes) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .update({
+      status,
+      admin_notes,
+    })
+    .eq("id", id)
+    .select()
+    .single();
 
-    return data;
+  if (error) {
+    throw error;
+  }
+
+  return data;
+};
+
+// GET USER BOOKINGS
+export const getUserBookingsService = async (userId) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      `
+      *,
+      rooms(*)
+    `,
+    )
+    .eq("user_id", userId)
+    .order("created_at", {
+      ascending: false,
+    });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 };
 
 // CANCEL BOOKING
+export const cancelBookingService = async (bookingId) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .update({
+      status: "cancelled",
+    })
+    .eq("id", bookingId)
+    .select()
+    .single();
 
-export const cancelBookingService = async(bookingId) => {
-    const { data, error } = await supabase
-        .from("bookings")
-        .update({
-            status: "cancelled",
-        })
-        .eq("id", bookingId)
-        .select()
-        .single();
+  if (error) {
+    throw error;
+  }
 
-    if (error) {
-        throw error;
-    }
-
-    return data;
+  return data;
 };

@@ -4,7 +4,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { motion } from "framer-motion";
 
-import useAuthStore from "../../store/authStore";
+import useAuthStore from "../../store/authstore";
 
 const Topbar = () => {
   const user = useAuthStore((state) => state.user);
