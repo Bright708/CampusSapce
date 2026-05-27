@@ -1,9 +1,10 @@
 import express from "express";
-
 import {
-    createBooking,
-    getAllBookings,
-    updateBookingStatus,
+    cancelBooking,
+    createBookingService,
+    getAllBookingsService,
+    getUserBookings,
+    updateBookingStatusService
 } from "../controllers/bookingController.js";
 
 const router = express.Router();
@@ -11,14 +12,17 @@ const router = express.Router();
 import authMiddleware from "../middleware/authMiddleware.js";
 import roleMiddleware from "../middleware/roleMiddleware.js";
 
-router.post("/", authMiddleware, createBooking);
+router.post("/", authMiddleware, createBookingService);
 
 router.patch(
     "/:id/status",
     authMiddleware,
     roleMiddleware("admin"),
-    updateBookingStatus,
+    updateBookingStatusService,
 );
-router.get("/", getAllBookings);
+router.put("/cancel/:id", cancelBooking);
+
+router.get("/user/:userId", getUserBookings);
+router.get("/", getAllBookingsService);
 
 export default router;

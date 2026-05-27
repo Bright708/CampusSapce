@@ -21,6 +21,14 @@ const useAuthStore = create((set) => ({
     });
 
     try {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@st\.ug\.edu\.gh$/;
+
+      if (!emailRegex.test(email)) {
+        return {
+          success: false,
+          message: "Only university emails are allowed",
+        };
+      }
       const { data, error } = await supabase.auth.signUp({
         email,
         password,

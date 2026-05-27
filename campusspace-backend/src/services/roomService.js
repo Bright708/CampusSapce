@@ -45,3 +45,20 @@ export const updateRoomService = async(id, roomData) => {
 
     return data;
 };
+
+async(bookingId) => {
+    const { data, error } = await supabase
+        .from("bookings")
+        .update({
+            status: "cancelled",
+        })
+        .eq("id", bookingId)
+        .select()
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+};

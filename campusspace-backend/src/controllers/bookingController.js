@@ -1,58 +1,132 @@
-import {
-    createBookingService,
-    getAllBookingsService,
-    updateBookingStatusService,
-} from "../services/bookingService.js";
+import supabase from "../config/supabase.js";
+import { cancelBookingService } from "../services/bookingService.js";
 
-export const createBooking = async(req, res) => {
-    try {
-        const bookingData = {
-            ...req.body,
-            user_id: req.user.id,
-        };
+// CREATE BOOKING
 
-        const booking = await createBookingService(bookingData);
+export const createBookingService = async(bookingData) => {
+    const { user_id, room_id, booking_date, start_time, end_time } = bookingData;
 
-        res.status(201).json({
-            success: true,
-            booking,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+    // CHECK EXISTING BOOKINGS
+    const { data: existingBookings, error: bookingError } = await supabase
+        .from("bookings")
+        .select("*")
+        .eq("room_id", room_id)
+        .eq("booking_date", booking_date)
+        .in("status", ["pending", "approved"]);
+
+    if (bookingError) {
+        throw bookingError;
     }
-};
-export const getAllBookings = async(req, res) => {
-    try {
-        const bookings = await getAllBookingsService();
 
-        res.status(200).json({
-            success: true,
-            bookings,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+    // OVERLAP CHECK
+    const hasOverlap = existingBookings.some((booking) => {
+        return start_time < booking.end_time && end_time > booking.start_time;
+    });
+
+    if (hasOverlap) {
+        throw new Error("Room already booked for this time slot");
     }
+
+    // CREATE BOOKING
+    const { data, error } = await supabase
+        .from("bookings")
+        .insert([{
+            user_id,
+            room_id,
+            booking_date,
+            start_time,
+            end_time,
+            status: "pending",
+        }, ])
+        .select()
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
 };
 
-export const updateBookingStatus = async(req, res) => {
-    try {
-        const { status, admin_notes } = req.body;
+// GET ALL BOOKINGS
 
-        const booking = await updateBookingStatusService(
-            req.params.id,
+export const getAllBookingsService = async() => {
+    const { data, error } = await supabase.from("bookings").select(`
+        *,
+        rooms(*),
+        profiles(*)
+      `);
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+};
+
+// UPDATE BOOKING STATUS
+
+export const updateBookingStatusService = async(
+    bookingId,
+    status,
+    admin_notes,
+) => {
+    const { data, error } = await supabase
+        .from("bookings")
+        .update({
             status,
             admin_notes,
-        );
+        })
+        .eq("id", bookingId)
+        .select()
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+};
+export const getUserBookings = async(req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const { data, error } = await supabase
+            .from("bookings")
+            .select(
+                `
+          *,
+          rooms(*)
+        `,
+            )
+            .eq("user_id", userId)
+            .order("created_at", {
+                ascending: false,
+            });
+
+        if (error) {
+            throw error;
+        }
 
         res.status(200).json({
             success: true,
-            message: "Booking updated successfully",
+            bookings: data,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export const cancelBooking = async(req, res) => {
+    try {
+        const booking = await cancelBookingService(req.params.id);
+
+        res.status(200).json({
+            success: true,
+            message: "Booking cancelled",
             booking,
         });
     } catch (error) {

@@ -47,3 +47,22 @@ export const updateBookingStatusService = async(id, status, admin_notes) => {
 
     return data;
 };
+
+// CANCEL BOOKING
+
+export const cancelBookingService = async(bookingId) => {
+    const { data, error } = await supabase
+        .from("bookings")
+        .update({
+            status: "cancelled",
+        })
+        .eq("id", bookingId)
+        .select()
+        .single();
+
+    if (error) {
+        throw error;
+    }
+
+    return data;
+};
