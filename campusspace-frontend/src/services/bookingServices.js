@@ -38,3 +38,39 @@ export const cancelBooking = async (bookingId) => {
 
   return response.data;
 };
+export const getAllBookings = async () => {
+  const authState = useAuthStore.getState();
+  const token = authState.session ? authState.session.access_token : null;
+
+  const response = await axios.get(API, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.data;
+};
+
+export const updateBookingStatus = async (
+  bookingId,
+  status,
+  admin_notes = "",
+) => {
+  const authState = useAuthStore.getState();
+  const token = authState.session ? authState.session.access_token : null;
+
+  const response = await axios.patch(
+    `${API}/${bookingId}/status`,
+    {
+      status,
+      admin_notes,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return response.data;
+};

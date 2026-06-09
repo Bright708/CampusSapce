@@ -10,15 +10,14 @@ import Home from "../pages/Home";
 import AdminRoute from "./AdminRoute";
 import ProtectedRoute from "./ProtectedRoute";
 
+import AdminLayout from "../layout/AdminLayout";
+import ManageBookings from "../pages/admin/ManageBookings";
+import ManageRooms from "../pages/admin/ManageRooms";
+import ManageUsers from "../pages/admin/ManageUsers";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
-
-/* 
-import ManageBookings from "../pages/admin/ManageBookings";
-import ManageRooms from "../pages/admin/ManageRooms";
-import ManageUsers from "../pages/admin/ManageUsers"; */
 
 const AppRoutes = () => {
   return (
@@ -60,17 +59,17 @@ const AppRoutes = () => {
           path="/admin"
           element={
             <AdminRoute>
-              <DashboardLayout />
+              <AdminLayout />
             </AdminRoute>
           }
         >
           <Route index element={<AdminDashboard />} />
 
-          {/* <Route path="rooms" element={<ManageRooms />} />
+          <Route path="rooms" element={<ManageRooms />} />
 
           <Route path="bookings" element={<ManageBookings />} />
 
-          <Route path="users" element={<ManageUsers />} /> */}
+          <Route path="users" element={<ManageUsers />} />
         </Route>
       </Routes>
     </BrowserRouter>

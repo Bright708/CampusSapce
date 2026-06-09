@@ -2,6 +2,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import JQBimg from "../../../public/JQBimg.jpg";
 import BookingModal from "./BookingModal";
 const RoomsCard = ({ room }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,10 +18,7 @@ const RoomsCard = ({ room }) => {
     >
       {/* ROOM IMAGE */}
       <img
-        src={
-          room.image_url ||
-          "https://images.unsplash.com/photo-1497366754035-f200968a6e72"
-        }
+        src={room.image_url || { JQBimg }}
         alt={room.name}
         className="h-56 w-full object-cover"
       />

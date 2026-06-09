@@ -8,3 +8,9 @@ export const getRooms = async () => {
 
   return response.data.rooms;
 };
+
+//CREATE ROOM
+export const createRoom = async (roomData) => {
+  const response = await axios.post(API_URL, roomData);
+  return response.data.room;
+};
