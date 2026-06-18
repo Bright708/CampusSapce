@@ -25,6 +25,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
   const [error, setError] = useState("");
 
   const [success, setSuccess] = useState("");
+  const [bookingType, setBookingType] = useState("");
 
   // SUBMIT BOOKING
 
@@ -47,11 +48,13 @@ const BookingModal = ({ isOpen, onClose, room }) => {
       setLoading(true);
 
       const bookingData = {
+        user_id: user.id,
         room_id: room.id,
         booking_date: bookingDate,
         start_time: startTime,
         end_time: endTime,
         event_title: eventTitle,
+        booking_type: bookingType,
       };
 
       const response = await createBooking(bookingData);
@@ -75,6 +78,12 @@ const BookingModal = ({ isOpen, onClose, room }) => {
     } finally {
       setLoading(false);
     }
+  };
+  const bookingTitles = {
+    meeting: "Meeting",
+    lecture: "Lecture",
+    study: "Study Session",
+    event: "",
   };
 
   return (
@@ -136,13 +145,32 @@ const BookingModal = ({ isOpen, onClose, room }) => {
               className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
             />
           </div>
-          <input
-            type="text"
-            placeholder="Event Title"
-            value={eventTitle}
-            onChange={(e) => setEventTitle(e.target.value)}
-            className="h-12 rounded-xl border px-4"
-          />
+          <select
+            name="booking_type"
+            value={bookingType}
+            onChange={(e) => {
+              const value = e.target.value;
+
+              setBookingType(value);
+              setEventTitle(bookingTitles[value]);
+            }}
+            className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
+          >
+            <option value="meeting">Meeting</option>
+            <option value="lecture">Lecture</option>
+            <option value="study">Study Session</option>
+            <option value="event">Event</option>
+          </select>
+          {bookingType === "event" && (
+            <input
+              type="text"
+              placeholder="Event Title"
+              value={eventTitle}
+              onChange={(e) => setEventTitle(e.target.value)}
+              className="h-12 rounded-xl border px-4"
+              required
+            />
+          )}
 
           {/* TIMES */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

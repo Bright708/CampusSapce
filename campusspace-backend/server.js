@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import express from "express";
 import authRoutes from "./src/routes/authRoutes.js";
 import bookingRoutes from "./src/routes/bookingRoutes.js";
+import eventRoutes from "./src/routes/eventRoutes.js";
+import notificationRoutes from "./src/routes/notificationRoutes.js";
+import profileRoutes from "./src/routes/profileRoutes.js";
 import roomRoutes from "./src/routes/roomRoutes.js";
-
 dotenv.config();
 
 const app = express();
@@ -19,6 +21,9 @@ app.use(
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/profiles", profileRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/events", eventRoutes);
 
 app.get("/", (req, res) => {
   res.json({

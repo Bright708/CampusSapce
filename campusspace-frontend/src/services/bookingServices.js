@@ -3,14 +3,18 @@ import { supabase } from "../lib/supabase";
 import useAuthStore from "../store/authstore";
 const API = "http://localhost:3000/api/bookings";
 // CREATE BOOKING
-export const createBooking = async () => {
+export const createBooking = async (bookingData) => {
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  if (!session) throw new Error("Not authenticated");
+
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
 
   const token = session.access_token;
-  const response = await axios.post(`${API}/user/${userId}`, {
+
+  const response = await axios.post(API, bookingData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -22,6 +26,13 @@ export const createBooking = async () => {
 // GET USER BOOKINGS
 export const getUserBookings = async (userId) => {
   const authState = useAuthStore.getState();
+
+  console.log("AUTH STATE:", authState);
+  console.log("SESSION:", authState.session);
+  console.log(
+    "ACCESS TOKEN:",
+    authState.session ? authState.session.access_token : null,
+  );
   const token = authState.session ? authState.session.access_token : null;
   console.log(authState);
   console.log(token);
@@ -34,7 +45,23 @@ export const getUserBookings = async (userId) => {
   return response.data;
 }; // CANCEL BOOKING
 export const cancelBooking = async (bookingId) => {
-  const response = await axios.put(`${API}/cancel/${bookingId}`);
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) {
+    throw new Error("Not authenticated");
+  }
+
+  const response = await axios.put(
+    `${API}/cancel/${bookingId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${session.access_token}`,
+      },
+    },
+  );
 
   return response.data;
 };
@@ -54,6 +81,7 @@ export const getAllBookings = async () => {
 export const updateBookingStatus = async (
   bookingId,
   status,
+  roomData,
   admin_notes = "",
 ) => {
   const authState = useAuthStore.getState();
@@ -64,6 +92,7 @@ export const updateBookingStatus = async (
     {
       status,
       admin_notes,
+      roomData,
     },
     {
       headers: {
@@ -73,4 +102,18 @@ export const updateBookingStatus = async (
   );
 
   return response.data;
+};
+
+export const getBookingById = async (id) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const response = await axios.get(`${API}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${session.access_token}`,
+    },
+  });
+
+  return response.data.booking;
 };

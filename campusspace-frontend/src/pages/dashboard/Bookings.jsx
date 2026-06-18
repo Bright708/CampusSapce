@@ -114,10 +114,10 @@ const Bookings = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-3 text-sm text-gray-600">
-                  <span>📅 {booking.booking_date}</span>
+                  <span> {booking.booking_date}</span>
 
                   <span>
-                    ⏰ {booking.start_time} - {booking.end_time}
+                    {booking.start_time} - {booking.end_time}
                   </span>
                 </div>
               </div>

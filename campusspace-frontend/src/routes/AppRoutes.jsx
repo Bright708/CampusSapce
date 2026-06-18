@@ -1,23 +1,23 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AdminLayout from "../layout/AdminLayout";
 import DashboardLayout from "../layout/DashboardLayout";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import Bookings from "../pages/dashboard/Bookings";
-import Events from "../pages/dashboard/Events";
-import RoomDetails from "../pages/dashboard/RoomDetails";
-import Rooms from "../pages/dashboard/Rooms";
-import Settings from "../pages/dashboard/Settings";
-import Home from "../pages/Home";
-import AdminRoute from "./AdminRoute";
-import ProtectedRoute from "./ProtectedRoute";
-
-import AdminLayout from "../layout/AdminLayout";
 import ManageBookings from "../pages/admin/ManageBookings";
 import ManageRooms from "../pages/admin/ManageRooms";
 import ManageUsers from "../pages/admin/ManageUsers";
 import ForgotPassword from "../pages/Auth/ForgotPassword";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
+import Bookings from "../pages/dashboard/Bookings";
+import Calender from "../pages/dashboard/Calender";
 import Dashboard from "../pages/dashboard/Dashboard";
+import EventDetails from "../pages/dashboard/EventDetails";
+import Events from "../pages/dashboard/Events";
+import Profile from "../pages/dashboard/Profile";
+import Rooms from "../pages/dashboard/Rooms";
+import Home from "../pages/Home";
+import AdminRoute from "./AdminRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -45,13 +45,14 @@ const AppRoutes = () => {
 
           <Route path="rooms" element={<Rooms />} />
 
-          <Route path="rooms/:id" element={<RoomDetails />} />
+          <Route path="events/:id" element={<EventDetails />} />
+          <Route path="profile" element={<Profile />} />
 
           <Route path="bookings" element={<Bookings />} />
 
           <Route path="events" element={<Events />} />
 
-          <Route path="settings" element={<Settings />} />
+          <Route path="calendar" element={<Calender />} />
         </Route>
 
         {/* ADMIN DASHBOARD */}

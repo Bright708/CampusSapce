@@ -5,7 +5,7 @@ import JQB from "../../../public/JQBimg.jpg";
 
 import { useNavigate } from "react-router-dom";
 
-import useAuthStore from "../../store/authStore";
+import useAuthStore from "../../store/authstore";
 
 const Register = () => {
   const navigate = useNavigate();

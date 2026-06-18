@@ -5,7 +5,7 @@ import "./index.css";
 
 import AppRoutes from "./routes/AppRoutes";
 
-import useAuthStore from "./store/authStore";
+import useAuthStore from "./store/authstore";
 
 useAuthStore.getState().checkAuth();
 

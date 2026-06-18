@@ -1,10 +1,9 @@
 import BookIcon from "@mui/icons-material/Book";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CloseIcon from "@mui/icons-material/Close";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import EventIcon from "@mui/icons-material/Event";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import PersonIcon from "@mui/icons-material/Person";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -21,31 +20,25 @@ const MobileAdminSidebar = ({ isOpen, setIsOpen }) => {
     {
       name: "Dashboard",
       icon: <DashboardIcon />,
-      path: "/dashboard",
+      path: "/admin",
     },
 
     {
       name: "Rooms",
       icon: <MeetingRoomIcon />,
-      path: "/dashboard/rooms",
+      path: "/admin/rooms",
     },
 
     {
       name: "Bookings",
       icon: <BookIcon />,
-      path: "/dashboard/bookings",
+      path: "/admin/bookings",
     },
 
     {
-      name: "Calendar",
-      icon: <CalendarMonthIcon />,
-      path: "/dashboard/calendar",
-    },
-
-    {
-      name: "Events",
-      icon: <EventIcon />,
-      path: "/dashboard/events",
+      name: "Users",
+      icon: <PersonIcon />,
+      path: "/admin/users",
     },
   ];
 

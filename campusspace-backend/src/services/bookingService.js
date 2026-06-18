@@ -2,8 +2,15 @@ import supabase from "../config/supabase.js";
 
 // CREATE BOOKING
 export const createBookingService = async (bookingData) => {
-  const { user_id, room_id, booking_date, start_time, end_time, event_title } =
-    bookingData;
+  const {
+    user_id,
+    room_id,
+    booking_date,
+    start_time,
+    end_time,
+    event_title,
+    booking_type,
+  } = bookingData;
 
   // CHECK EXISTING BOOKINGS
   const { data: existingBookings, error: bookingError } = await supabase
@@ -36,7 +43,9 @@ export const createBookingService = async (bookingData) => {
         booking_date,
         start_time,
         end_time,
+        booking_type,
         event_title,
+
         status: "pending",
       },
     ])
@@ -82,7 +91,12 @@ export const updateBookingStatusService = async (id, status, admin_notes) => {
       admin_notes,
     })
     .eq("id", id)
-    .select()
+    .select(
+      `
+      *,
+      rooms(name)
+    `,
+    )
     .single();
 
   if (error) {
@@ -91,7 +105,6 @@ export const updateBookingStatusService = async (id, status, admin_notes) => {
 
   return data;
 };
-
 // GET USER BOOKINGS
 export const getUserBookingsService = async (userId) => {
   const { data, error } = await supabase
@@ -128,6 +141,23 @@ export const cancelBookingService = async (bookingId) => {
   if (error) {
     throw error;
   }
+
+  return data;
+};
+export const getBookingByIdService = async (id) => {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select(
+      `
+      *,
+      profiles(full_name,email),
+      rooms(name,building)
+    `,
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) throw error;
 
   return data;
 };

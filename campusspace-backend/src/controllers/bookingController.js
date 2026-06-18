@@ -2,9 +2,11 @@ import {
     cancelBookingService,
     createBookingService,
     getAllBookingsService,
+    getBookingByIdService,
     getUserBookingsService,
     updateBookingStatusService,
 } from "../services/bookingService.js";
+import { createNotificationService } from "../services/notificationService.js";
 
 // CREATE BOOKING
 export const createBooking = async (req, res) => {
@@ -80,6 +82,31 @@ export const updateBookingStatus = async (req, res) => {
       status,
       admin_notes,
     );
+    console.log("BOOKING:", booking);
+
+    await createNotificationService(
+      booking.user_id,
+      `Your booking for ${booking.rooms.name} has been ${status}`,
+    );
+
+    res.status(200).json({
+      success: true,
+      booking,
+    });
+  } catch (error) {
+    console.log("NOTIFICATION ERROR:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// CANCEL BOOKING
+export const cancelBooking = async (req, res) => {
+  try {
+    const booking = await cancelBookingService(req.params.id);
 
     res.status(200).json({
       success: true,
@@ -93,10 +120,9 @@ export const updateBookingStatus = async (req, res) => {
   }
 };
 
-// CANCEL BOOKING
-export const cancelBooking = async (req, res) => {
+export const getBookingById = async (req, res) => {
   try {
-    const booking = await cancelBookingService(req.params.id);
+    const booking = await getBookingByIdService(req.params.id);
 
     res.status(200).json({
       success: true,

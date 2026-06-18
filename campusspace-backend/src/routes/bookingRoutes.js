@@ -1,11 +1,12 @@
 import express from "express";
 
 import {
-    cancelBooking,
-    createBooking,
-    getAllBookings,
-    getUserBookings,
-    updateBookingStatus,
+  cancelBooking,
+  createBooking,
+  getAllBookings,
+  getBookingById,
+  getUserBookings,
+  updateBookingStatus,
 } from "../controllers/bookingController.js";
 
 import authMiddleware from "../middleware/authMiddleware.js";
@@ -17,7 +18,7 @@ const router = express.Router();
 router.post("/", authMiddleware, createBooking);
 
 router.get("/", authMiddleware, getAllBookings);
-
+router.get("/:id", authMiddleware, getBookingById);
 router.get("/user/:userId", authMiddleware, getUserBookings);
 
 router.patch(

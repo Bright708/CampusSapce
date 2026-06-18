@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
+import BookingReviewModal from "../../components/admin/BookingReviewModal";
 import {
   getAllBookings,
   updateBookingStatus,
 } from "../../services/bookingServices";
-
 const ManageBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   const fetchBookings = async () => {
     try {
@@ -33,7 +38,19 @@ const ManageBookings = () => {
       console.log(error);
     }
   };
+  const total = bookings.length;
 
+  const pending = bookings.filter(
+    (booking) => booking.status === "pending",
+  ).length;
+
+  const approved = bookings.filter(
+    (booking) => booking.status === "approved",
+  ).length;
+
+  const rejected = bookings.filter(
+    (booking) => booking.status === "rejected",
+  ).length;
   const getStatusColor = (status) => {
     switch (status) {
       case "approved":
@@ -57,6 +74,38 @@ const ManageBookings = () => {
       </div>
     );
   }
+  const handleApprove = async (notes) => {
+    try {
+      await updateBookingStatus(selectedBooking.id, "approved", notes);
+
+      fetchBookings();
+
+      setShowReviewModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleReject = async (notes) => {
+    try {
+      await updateBookingStatus(selectedBooking.id, "rejected", notes);
+
+      fetchBookings();
+
+      setShowReviewModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const filteredBookings = bookings.filter((booking) => {
+    const matchesSearch = booking.rooms?.name
+      ?.toLowerCase()
+      .includes(search.toLowerCase());
+
+    const matchesStatus =
+      statusFilter === "all" || booking.status === statusFilter;
+
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -64,8 +113,48 @@ const ManageBookings = () => {
 
       <div>
         <h1 className="text-3xl font-bold text-blue-950">Manage Bookings</h1>
+        <div className="grid grid-cols-1 text-3xl font-bold sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-white p-5 rounded-2xl shadow">
+            <p className="text-xl font-normal">Total</p>
+            <h2>{total}</h2>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl shadow">
+            <p className="text-xl font-normal">Pending</p>
+            <h2 className="text-yellow-500">{pending}</h2>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl shadow">
+            <p className="text-xl font-normal">Approved</p>
+            <h2 className="text-green-600"> {approved}</h2>
+          </div>
+
+          <div className="bg-white p-5 rounded-2xl shadow">
+            <p className="text-xl font-normal">Rejected</p>
+            <h2 className="text-red-500">{rejected}</h2>
+          </div>
+        </div>
 
         <p className="text-gray-500 mt-1">Review and manage room bookings</p>
+      </div>
+      <div className="flex flex-col md:flex-row gap-4">
+        <input
+          type="text"
+          placeholder="Search room..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border rounded-xl p-3 w-full md:w-80"
+        />
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="border rounded-xl p-3"
+        >
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
       </div>
 
       {/* Empty State */}
@@ -76,7 +165,7 @@ const ManageBookings = () => {
         </div>
       ) : (
         <div className="grid gap-5">
-          {bookings.map((booking) => (
+          {filteredBookings.map((booking) => (
             <div
               key={booking.id}
               className="bg-white rounded-2xl shadow p-5 flex flex-col gap-4"
@@ -134,23 +223,27 @@ const ManageBookings = () => {
               {booking.status === "pending" && (
                 <div className="flex flex-wrap gap-3">
                   <button
-                    onClick={() => handleStatusUpdate(booking.id, "approved")}
-                    className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl transition"
+                    onClick={() => {
+                      setSelectedBooking(booking);
+                      setShowReviewModal(true);
+                    }}
+                    className="bg-blue-950 text-white px-4 py-2 rounded-xl"
                   >
-                    Approve
-                  </button>
-
-                  <button
-                    onClick={() => handleStatusUpdate(booking.id, "rejected")}
-                    className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl transition"
-                  >
-                    Reject
+                    Review
                   </button>
                 </div>
               )}
             </div>
           ))}
         </div>
+      )}
+      {showReviewModal && (
+        <BookingReviewModal
+          booking={selectedBooking}
+          onClose={() => setShowReviewModal(false)}
+          onApprove={handleApprove}
+          onReject={handleReject}
+        />
       )}
     </div>
   );

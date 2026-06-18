@@ -25,18 +25,19 @@ export const getAllRoomsService = async() => {
 
     return data;
 };
-export const deleteRoomService = async(id) => {
-    const { error } = await supabase.from("rooms").delete().eq("id", id);
+export const deleteRoomService = async(roomId) => {
+    const { error } = await supabase.from("rooms").delete().eq("id", roomId);
 
     if (error) {
         throw new Error(error.message);
     }
+    return true;
 };
-export const updateRoomService = async(id, roomData) => {
+export const updateRoomService = async(roomId, roomData) => {
     const { data, error } = await supabase
         .from("rooms")
         .update(roomData)
-        .eq("id", id)
+        .eq("id", roomId)
         .select();
 
     if (error) {

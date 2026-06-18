@@ -1,5 +1,4 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -49,7 +48,6 @@ const Home = () => {
 
         {/* Icons */}
         <div className="flex items-center gap-4">
-          <NotificationsIcon className="hidden cursor-pointer md:block" />
           <Link to={"/dashboard"}>
             <PersonIcon className="hidden cursor-pointer md:blockr" />
           </Link>

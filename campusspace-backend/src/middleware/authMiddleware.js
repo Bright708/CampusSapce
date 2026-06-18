@@ -10,8 +10,9 @@ const authMiddleware = async (req, res, next) => {
         message: "No token provided",
       });
     }
-
+    console.log("AUTH HEADER:", authHeader);
     const token = authHeader.split(" ")[1];
+    console.log("TOKEN:", token);
 
     const {
       data: { user },

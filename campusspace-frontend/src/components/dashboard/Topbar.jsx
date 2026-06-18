@@ -1,12 +1,45 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
-
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  getNotifications,
+  markAsRead,
+} from "../../services/notificationServices";
 
+import { Bell } from "lucide-react";
 import useAuthStore from "../../store/authstore";
-
 const Topbar = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    console.log("NOTIFICATION STATE:", notifications);
+  }, [notifications]);
+  useEffect(() => {
+    fetchNotifications();
+  }, [open]);
+
+  const fetchNotifications = async () => {
+    const data = await getNotifications();
+    console.log("NOTIFICATIONS:", data);
+    setNotifications(data);
+  };
+  const handleMarkAsRead = async (id) => {
+    try {
+      await markAsRead(id);
+
+      setNotifications((prev) =>
+        prev.map((notification) =>
+          notification.id === id
+            ? { ...notification, is_read: true }
+            : notification,
+        ),
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const user = useAuthStore((state) => state.user);
 
   const profile = useAuthStore((state) => state.profile);
@@ -34,7 +67,44 @@ const Topbar = () => {
             }}
             className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-gray-100 transition-all duration-300 hover:bg-blue-50"
           >
-            <NotificationsIcon className="text-gray-600" />
+            <div className="relative">
+              <button onClick={() => setOpen(!open)}>
+                <Bell size={24} />
+              </button>
+
+              {notifications.filter((n) => !n.is_read).length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">
+                  {notifications.filter((n) => !n.is_read).length}
+                </span>
+              )}
+              {open && (
+                <div className="absolute -right-12 mt-2 w-80 bg-white shadow-xl rounded-xl border z-50">
+                  {notifications.length === 0 ? (
+                    <p className="p-4 text-gray-500">No notifications</p>
+                  ) : (
+                    notifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className="flex items-center justify-between p-4 border-b"
+                      >
+                        <div>
+                          <p className="text-sm">{notification.message}</p>
+                        </div>
+
+                        {!notification.is_read && (
+                          <button
+                            onClick={() => handleMarkAsRead(notification.id)}
+                            className="bg-blue-950 text-white px-3 py-1 rounded-lg text-sm"
+                          >
+                            Read
+                          </button>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
           </motion.div>
 
           <motion.div
@@ -43,7 +113,9 @@ const Topbar = () => {
             }}
             className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-gray-100 transition-all duration-300 hover:bg-blue-50"
           >
-            <AccountCircleIcon className="text-gray-600" />
+            <Link to={"profile"}>
+              <AccountCircleIcon className="text-gray-600" />
+            </Link>
           </motion.div>
         </div>
       </section>

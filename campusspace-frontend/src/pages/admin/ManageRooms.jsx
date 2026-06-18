@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import CreateRoomModal from "../../components/admin/CreateRoomModal";
-import { getRooms } from "../../services/roomServices";
+import EditRoomModal from "../../components/admin/EditRoomModal";
+import { deleteRoom, getRooms } from "../../services/roomServices";
 
 const ManageRooms = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [selectedRoom, setSelectedRoom] = useState(null);
+
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const fetchRooms = async () => {
     try {
@@ -34,7 +38,24 @@ const ManageRooms = () => {
   if (loading) {
     return <h1>Loading rooms...</h1>;
   }
+  const handleDelete = async (roomId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this room?",
+    );
 
+    if (!confirmed) return;
+
+    try {
+      await deleteRoom(roomId);
+
+      fetchRooms();
+
+      alert("Room deleted successfully");
+    } catch (error) {
+      console.log(error);
+      alert("Failed to delete room");
+    }
+  };
   return (
     <div className="flex flex-col gap-5 w-full ">
       <div className="flex justify-between">
@@ -51,6 +72,12 @@ const ManageRooms = () => {
         >
           Create Room
         </button>
+        {showCreateModal && (
+          <CreateRoomModal
+            onClose={() => setShowCreateModal(false)}
+            refreshRooms={fetchRooms}
+          />
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -104,11 +131,27 @@ const ManageRooms = () => {
               </div>
 
               <div className="flex gap-3">
-                <button className="bg-yellow-500 text-white px-4 py-2 rounded-xl">
+                <button
+                  onClick={() => {
+                    setSelectedRoom(room);
+                    setShowEditModal(true);
+                  }}
+                  className="bg-yellow-500 text-white px-4 py-2 rounded-xl"
+                >
                   Edit
                 </button>
+                {showEditModal && (
+                  <EditRoomModal
+                    room={selectedRoom}
+                    onClose={() => setShowEditModal(false)}
+                    onSuccess={fetchRooms}
+                  />
+                )}
 
-                <button className="bg-red-600 text-white px-4 py-2 rounded-xl">
+                <button
+                  onClick={() => handleDelete(room.id)}
+                  className="bg-red-600 text-white px-4 py-2 rounded-xl hover:bg-red-700 transition"
+                >
                   Delete
                 </button>
               </div>
@@ -116,12 +159,6 @@ const ManageRooms = () => {
           </div>
         ))}
       </div>
-      {showCreateModal && (
-        <CreateRoomModal
-          onClose={() => setShowCreateModal(false)}
-          refreshRooms={fetchRooms}
-        />
-      )}
     </div>
   );
 };
