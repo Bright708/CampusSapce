@@ -1,19 +1,27 @@
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CTABanner from "../components/CTABanner";
 import Feature from "../components/Feature";
 import Footer from "../components/Footer";
 import SnNav from "../components/SnNav";
 import Testimonial from "../components/Testimonial";
+import useAuthStore from "../store/authstore";
 const Home = () => {
   const [menuClick, setMenuClick] = useState(false);
+  const navigate = useNavigate();
 
+  const user = useAuthStore((state) => state.user);
   const handleMenuClick = () => {
     setMenuClick(!menuClick);
-
-    // Logic to toggle the mobile menu
+  };
+  const handleBookRoom = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
   };
   return (
     <div className="min-h-screen w-full bg-[#f8f9ff] p-4 flex flex-col gap-13 sm:p-6 lg:p-12">
@@ -27,15 +35,15 @@ const Home = () => {
         {/* Nav Links */}
         <ul className="hidden items-center gap-7 font-semibold md:flex">
           <li className="cursor-pointer opacity-60 transition-all duration-300 hover:text-blue-950 hover:opacity-100">
-            Home
+            <a href="#home">Home</a>
           </li>
 
           <li className="cursor-pointer opacity-60 transition-all duration-300 hover:text-blue-950 hover:opacity-100">
-            Features
+            <a href="#features">Features</a>
           </li>
 
-          <li className="cursor-pointer opacity-60 transition-all duration-300 hover:text-blue-950 hover:opacity-100">
-            Reviews
+          <li className="cursor-pointer opacity-60   transition-all duration-300 hover:text-blue-950 hover:opacity-100">
+            <a href="#testimonials">Reviews</a>
           </li>
 
           <Link to={"/register"}>
@@ -59,7 +67,10 @@ const Home = () => {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="flex flex-col items-center justify-center gap-6 py-16 text-center sm:py-24">
+      <section
+        className="flex flex-col items-center justify-center gap-6 py-16 text-center sm:py-24"
+        id="home"
+      >
         <h1 className="max-w-5xl text-4xl font-bold leading-tight text-blue-950 sm:text-5xl lg:text-7xl">
           Smart Space,{" "}
           <span className="text-violet-400">Seamless Learning</span>
@@ -72,12 +83,11 @@ const Home = () => {
 
         {/* CTA Buttons */}
         <section className="flex flex-col gap-4 sm:flex-row">
-          <button className="h-14 rounded-[10px] bg-blue-950 px-8 text-white transition-all duration-300 hover:opacity-70">
+          <button
+            onClick={handleBookRoom}
+            className="h-14 rounded-[10px] bg-blue-950 px-8 text-white transition-all duration-300 hover:opacity-70"
+          >
             Book a Room/Hall
-          </button>
-
-          <button className="h-14 rounded-[10px] border border-blue-950 bg-white px-8 text-blue-950 transition-all duration-300 hover:opacity-70">
-            Watch Demo
           </button>
         </section>
       </section>

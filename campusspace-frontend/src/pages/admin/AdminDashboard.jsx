@@ -8,7 +8,6 @@ const AdminDashboard = () => {
   const [profiles, setProfiles] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [bookings, setBookings] = useState([]);
-  const [statusFilter, setStatusFilter] = useState("all");
 
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");

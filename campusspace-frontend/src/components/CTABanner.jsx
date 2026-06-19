@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import { Link } from "react-router-dom";
 const CTABanner = () => {
   return (
     <motion.section
@@ -27,17 +27,19 @@ const CTABanner = () => {
         {/* Buttons */}
         <div className="flex w-full flex-col items-center justify-center gap-4 sm:w-auto sm:flex-row">
           {/* Primary Button */}
-          <motion.button
-            whileHover={{
-              scale: 1.05,
-            }}
-            whileTap={{
-              scale: 0.95,
-            }}
-            className="w-full rounded-xl bg-violet-400 px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-violet-500 sm:w-auto"
-          >
-            Get Started Now
-          </motion.button>
+          <Link to={"register"}>
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
+              className="w-full rounded-xl bg-blue-800 px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-blue-500/40 sm:w-auto"
+            >
+              Get Started Now
+            </motion.button>
+          </Link>
 
           {/* Secondary Button */}
           <motion.button

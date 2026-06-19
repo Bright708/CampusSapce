@@ -29,7 +29,10 @@ const Feature = () => {
   ];
 
   return (
-    <section className="relative flex w-full flex-col gap-12 overflow-hidden px-4 py-20 md:px-8 lg:px-16">
+    <section
+      className="relative flex w-full flex-col gap-12 overflow-hidden px-4 py-20 md:px-8 lg:px-16"
+      id="features"
+    >
       {/* Background Blur */}
       <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-violet-300/20 blur-3xl" />
 
