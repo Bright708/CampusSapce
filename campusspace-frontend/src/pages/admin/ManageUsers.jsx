@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { TableRowSkeleton } from "../../components/skeletons";
 import { getProfiles } from "../../services/profileServices";
-
 const ManageUsers = () => {
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,8 +49,49 @@ const ManageUsers = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-20">
-        <h1 className="text-xl font-semibold">Loading users...</h1>
+      <div className="flex flex-col gap-6 p-4 md:p-6">
+        <div>
+          <div className="h-12 w-72 rounded-2xl bg-white" />
+          <div className="mt-3 h-5 w-96 rounded-2xl bg-white" />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white p-5 rounded-2xl shadow">
+              <div className="h-5 w-40 rounded-2xl bg-gray-100" />
+              <div className="mt-4 h-10 w-20 rounded-2xl bg-gray-100" />
+            </div>
+          ))}
+        </div>
+
+        <div className="h-12 w-full md:w-96 rounded-xl bg-white" />
+
+        <div className="hidden md:block bg-white rounded-2xl shadow overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-blue-950 text-white">
+                <th className="p-4 text-left">Name</th>
+                <th className="p-4 text-left">Email</th>
+                <th className="p-4 text-left">Role</th>
+                <th className="p-4 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <TableRowSkeleton rows={6} />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="md:hidden flex flex-col gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow p-4">
+              <div className="h-6 w-56 rounded-2xl bg-gray-100" />
+              <div className="mt-3 h-4 w-full rounded-2xl bg-gray-100" />
+              <div className="mt-3 h-4 w-40 rounded-2xl bg-gray-100" />
+              <div className="mt-3 h-10 w-full rounded-2xl bg-gray-100" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

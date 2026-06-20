@@ -27,15 +27,8 @@ export const createBooking = async (bookingData) => {
 export const getUserBookings = async (userId) => {
   const authState = useAuthStore.getState();
 
-  console.log("AUTH STATE:", authState);
-  console.log("SESSION:", authState.session);
-  console.log(
-    "ACCESS TOKEN:",
-    authState.session ? authState.session.access_token : null,
-  );
   const token = authState.session ? authState.session.access_token : null;
-  console.log(authState);
-  console.log(token);
+
   const response = await axios.get(`${API}/user/${userId}`, {
     headers: {
       Authorization: `Bearer ${token}`,

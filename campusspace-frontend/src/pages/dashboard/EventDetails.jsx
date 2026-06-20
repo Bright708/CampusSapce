@@ -25,7 +25,22 @@ const EventDetails = () => {
   };
 
   if (!event) {
-    return <h1>Loading event...</h1>;
+    return (
+      <div className="flex flex-col gap-8">
+        <div>
+          <div className="h-12 w-96 rounded-2xl bg-white" />
+          <div className="mt-3 h-5 w-48 rounded-2xl bg-white" />
+        </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div>
+            <EventCardSkeleton />
+          </div>
+          <div>
+            <EventCardSkeleton />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

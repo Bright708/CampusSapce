@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { TableRowSkeleton } from "../../components/skeletons";
 import { getAllBookings } from "../../services/bookingServices";
 import { getProfiles } from "../../services/profileServices";
 import { getRooms } from "../../services/roomServices";
-
 const AdminDashboard = () => {
   const [profiles, setProfiles] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -34,8 +34,45 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-20">
-        <h1 className="text-xl font-semibold">Loading Dashboard...</h1>
+      <div className="flex flex-col gap-8 p-4 md:p-6">
+        {/* HEADER */}
+        <div>
+          <div className="h-12 w-72 rounded-2xl bg-white" />
+          <div className="mt-3 h-5 w-96 rounded-2xl bg-white" />
+        </div>
+
+        <div className="h-12 w-full max-w-md rounded-xl bg-white" />
+
+        {/* STATS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow p-6">
+              <div className="h-5 w-40 rounded-2xl bg-gray-100" />
+              <div className="mt-4 h-10 w-24 rounded-2xl bg-gray-100" />
+            </div>
+          ))}
+        </div>
+
+        {/* RECENT BOOKINGS TABLE */}
+        <div className="bg-white rounded-2xl shadow overflow-hidden">
+          <div className="p-6 border-b">
+            <div className="h-6 w-56 rounded-2xl bg-gray-100" />
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-blue-950 text-white">
+                  <th className="p-4 text-left">Room</th>
+                  <th className="p-4 text-left">Date</th>
+                  <th className="p-4 text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <TableRowSkeleton rows={6} />
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }

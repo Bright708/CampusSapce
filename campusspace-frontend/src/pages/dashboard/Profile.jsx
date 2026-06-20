@@ -6,6 +6,10 @@ import useAuthStore from "../../store/authstore";
 const Profile = () => {
   const profile = useAuthStore((state) => state.profile);
 
+  if (!profile) {
+    return <ProfileSkeleton />;
+  }
+
   const [formData, setFormData] = useState({
     full_name: profile?.full_name || "",
     department: profile?.department || "",

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import BookingReviewModal from "../../components/admin/BookingReviewModal";
+import { BookingCardSkeleton } from "../../components/skeletons";
 import {
   getAllBookings,
   updateBookingStatus,
@@ -69,11 +70,37 @@ const ManageBookings = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center py-20">
-        <h2 className="text-lg font-medium">Loading bookings...</h2>
+      <div className="flex flex-col gap-6">
+        <div>
+          <div className="h-10 w-72 rounded-2xl bg-white" />
+          <div className="mt-3 h-5 w-96 rounded-2xl bg-white" />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white p-5 rounded-2xl shadow">
+              <div className="h-5 w-28 rounded-2xl bg-gray-100" />
+              <div className="mt-4 h-10 w-16 rounded-2xl bg-gray-100" />
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="h-12 w-full md:w-96 rounded-xl bg-white" />
+          <div className="h-12 w-full md:w-48 rounded-xl bg-white" />
+        </div>
+
+        <div className="grid gap-5">
+          {[...Array(4)].map((_, i) => (
+            <div key={i}>
+              <BookingCardSkeleton />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
+
   const handleApprove = async (notes) => {
     try {
       await updateBookingStatus(selectedBooking.id, "approved", notes);

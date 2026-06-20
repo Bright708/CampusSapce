@@ -92,13 +92,7 @@ const useAuthStore = create((set) => ({
         .eq("id", data.user.id)
         .maybeSingle();
 
-      console.log(profile);
-      console.log(profileError);
-
       if (profileError) {
-        console.log(profileError);
-        console.log("PROFILE FETCH ERROR:", profileError);
-
         throw profileError;
       }
 

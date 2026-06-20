@@ -22,8 +22,6 @@ const Login = () => {
 
     const result = await signIn(formData);
 
-    console.log("RESULT:", JSON.stringify(result));
-
     if (result.success) {
       if (result.role === "admin") {
         navigate("/admin");

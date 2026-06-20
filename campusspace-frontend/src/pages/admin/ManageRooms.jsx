@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import CreateRoomModal from "../../components/admin/CreateRoomModal";
 import EditRoomModal from "../../components/admin/EditRoomModal";
+import { RoomCardSkeleton } from "../../components/skeletons";
 import { deleteRoom, getRooms } from "../../services/roomServices";
-
 const ManageRooms = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [rooms, setRooms] = useState([]);
@@ -15,8 +15,7 @@ const ManageRooms = () => {
   const fetchRooms = async () => {
     try {
       const response = await getRooms();
-      console.log("ROOM RESPONSE:", response);
-      console.log("ROOMS STATE:", rooms);
+
       setRooms(response);
     } catch (error) {
       console.log(error);
@@ -27,17 +26,30 @@ const ManageRooms = () => {
   const filteredRooms = rooms.filter((room) =>
     room.name.toLowerCase().includes(search.toLowerCase()),
   );
-  useEffect(() => {
-    console.log("ROOMS STATE:", rooms);
-  }, [rooms]);
+  useEffect(() => {}, [rooms]);
 
   useEffect(() => {
     fetchRooms();
   }, []);
 
   if (loading) {
-    return <h1>Loading rooms...</h1>;
+    return (
+      <div className="flex flex-col gap-5 w-full">
+        <div className="flex justify-between">
+          <div className="h-12 w-full max-w-md rounded-xl bg-white" />
+          <div className="h-12 w-40 rounded-xl bg-white" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i}>
+              <RoomCardSkeleton />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
+
   const handleDelete = async (roomId) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this room?",

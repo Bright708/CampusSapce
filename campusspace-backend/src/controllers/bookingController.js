@@ -1,10 +1,10 @@
 import {
-    cancelBookingService,
-    createBookingService,
-    getAllBookingsService,
-    getBookingByIdService,
-    getUserBookingsService,
-    updateBookingStatusService,
+  cancelBookingService,
+  createBookingService,
+  getAllBookingsService,
+  getBookingByIdService,
+  getUserBookingsService,
+  updateBookingStatusService,
 } from "../services/bookingService.js";
 import { createNotificationService } from "../services/notificationService.js";
 
@@ -82,7 +82,6 @@ export const updateBookingStatus = async (req, res) => {
       status,
       admin_notes,
     );
-    console.log("BOOKING:", booking);
 
     await createNotificationService(
       booking.user_id,

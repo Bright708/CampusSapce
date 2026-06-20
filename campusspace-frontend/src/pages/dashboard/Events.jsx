@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import EventCard from "../../components/events/EventCard";
+import { EventCardSkeleton } from "../../components/skeletons";
 import { getEvents } from "../../services/EventServices";
-
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,21 @@ const Events = () => {
   }, []);
 
   if (loading) {
-    return <h1 className="text-2xl font-bold">Loading Events...</h1>;
+    return (
+      <div className="flex flex-col gap-8">
+        <div>
+          <div className="h-11 w-72 rounded-2xl bg-white" />
+          <div className="mt-3 h-5 w-96 rounded-2xl bg-white" />
+        </div>
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i}>
+              <EventCardSkeleton />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (

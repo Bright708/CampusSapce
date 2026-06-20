@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 import { cancelBooking, getUserBookings } from "../../services/bookingServices";
 
-import useAuthStore from "../../store/authstore";
-
 import { motion } from "framer-motion";
+import { BookingCardSkeleton } from "../../components/skeletons";
+import useAuthStore from "../../store/authstore";
 
 const Bookings = () => {
   const user = useAuthStore((state) => state.user);
@@ -70,7 +70,23 @@ const Bookings = () => {
   };
 
   if (loading) {
-    return <h1>Loading bookings...</h1>;
+    return (
+      <div className="flex flex-col gap-8">
+        {/* HEADER */}
+        <div>
+          <div className="h-12 w-72 rounded-2xl bg-white" />
+          <div className="mt-3 h-5 w-96 rounded-2xl bg-white" />
+        </div>
+
+        <div className="grid grid-cols-1 gap-6">
+          {[...Array(6)].map((_, i) => (
+            <div key={i}>
+              <BookingCardSkeleton />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (

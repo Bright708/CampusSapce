@@ -13,16 +13,14 @@ import useAuthStore from "../../store/authstore";
 const Topbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    console.log("NOTIFICATION STATE:", notifications);
-  }, [notifications]);
+  useEffect(() => {}, [notifications]);
   useEffect(() => {
     fetchNotifications();
   }, [open]);
 
   const fetchNotifications = async () => {
     const data = await getNotifications();
-    console.log("NOTIFICATIONS:", data);
+
     setNotifications(data);
   };
   const handleMarkAsRead = async (id) => {

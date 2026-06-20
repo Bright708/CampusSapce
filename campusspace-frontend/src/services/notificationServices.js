@@ -14,8 +14,6 @@ export const getNotifications = async () => {
     },
   });
 
-  console.log("NOTIFICATIONS API:", response.data);
-
   return response.data.notifications;
 };
 

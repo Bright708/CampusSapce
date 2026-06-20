@@ -23,7 +23,6 @@ const Register = () => {
     e.preventDefault();
 
     const result = await signUp(formData);
-    console.log(result);
 
     if (result.success) {
       alert("Account created successfully!");

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import RoomCard from "../../components/dashboard/RoomsCard";
-
+import { RoomCardSkeleton } from "../../components/skeletons";
 import { getRooms } from "../../services/roomServices";
 
 const Rooms = () => {
@@ -64,7 +64,34 @@ const Rooms = () => {
   });
 
   if (loading) {
-    return <h1>Loading rooms...</h1>;
+    return (
+      <div className="flex w-full flex-col gap-8">
+        {/* HEADER */}
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <div className="h-12 w-64 rounded-2xl bg-white" />
+            <div className="mt-4 h-5 w-96 rounded-2xl bg-white" />
+          </div>
+
+          {/* FILTERS */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="h-12 rounded-2xl bg-white" />
+            <div className="h-12 rounded-2xl bg-white" />
+            <div className="h-12 rounded-2xl bg-white" />
+          </div>
+        </div>
+
+        {/* ROOMS GRID */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={i}>
+              <RoomCardSkeleton />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (

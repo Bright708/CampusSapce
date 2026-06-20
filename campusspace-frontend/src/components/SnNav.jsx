@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const SnNav = ({ menuClick, setMenuClick }) => {
   return (
     <nav
@@ -18,20 +19,21 @@ const SnNav = ({ menuClick, setMenuClick }) => {
       {/* Mobile Links */}
       <div className="mt-10 flex flex-col gap-6">
         <button className="rounded-md px-4 py-3 text-left text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white">
-          Home
+          <a href="#Home">Home</a>
         </button>
 
         <button className="rounded-md px-4 py-3 text-left text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white">
-          Features
+          <a href="#features">Features</a>
         </button>
 
         <button className="rounded-md px-4 py-3 text-left text-blue-950 transition-all duration-300 hover:bg-blue-950 hover:text-white">
-          Reviews
+          <a href="#testimonials">Testimonials</a>
         </button>
-
-        <button className="mt-4 rounded-md bg-blue-950 px-4 py-3 text-white transition-all duration-300 hover:opacity-70">
-          Get Started
-        </button>
+        <Link to={"/register"}>
+          <button className="mt-4 rounded-md bg-blue-950 px-4 py-3 text-white transition-all duration-300 hover:opacity-70">
+            Get Started
+          </button>
+        </Link>
       </div>
     </nav>
   );

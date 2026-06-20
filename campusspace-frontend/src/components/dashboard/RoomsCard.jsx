@@ -6,6 +6,22 @@ import JQBimg from "../../../public/JQBimg.jpg";
 import BookingModal from "./BookingModal";
 const RoomsCard = ({ room }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const getAvailabilityStyle = (status) => {
+    switch (status) {
+      case "available":
+        return "bg-green-100 text-green-700";
+
+      case "occupied":
+        return "bg-red-100 text-red-700";
+
+      case "upcoming":
+        return "bg-yellow-100 text-yellow-700";
+
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
   return (
     <motion.div
       whileHover={{
@@ -27,6 +43,17 @@ const RoomsCard = ({ room }) => {
       <div className="flex flex-col gap-4 p-5">
         {/* ROOM NAME */}
         <div className="flex flex-col gap-1">
+          <div
+            className={`w-fit rounded-full px-4 py-1 text-sm font-semibold ${getAvailabilityStyle(room.availability)}`}
+          >
+            {room.availability === "available" && " Available Now"}
+
+            {room.availability === "occupied" &&
+              ` Occupied until on ${room.activeBooking?.booking_date} at ${room.activeBooking?.end_time}`}
+
+            {room.availability === "upcoming" &&
+              ` Next booking starts on ${room.upcomingBooking?.booking_date} at ${room.upcomingBooking?.start_time}`}
+          </div>
           <h1 className="text-2xl font-bold text-blue-950">{room.name}</h1>
 
           <div className="flex items-center gap-2 text-gray-500">
