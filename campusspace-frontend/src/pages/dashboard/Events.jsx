@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import EventCard from "../../components/events/EventCard";
 import { EventCardSkeleton } from "../../components/skeletons";
-import { getEvents } from "../../services/EventServices";
+import { getEvents } from "../../services/eventServices";
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
