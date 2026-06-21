@@ -13,10 +13,10 @@ const app = express();
 
 app.use(express.json());
 app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  }),
+    cors({
+        origin: "https://campus-sapce.vercel.app/ ",
+        credentials: true,
+    }),
 );
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/auth", authRoutes);
@@ -26,13 +26,13 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/events", eventRoutes);
 
 app.get("/", (req, res) => {
-  res.json({
-    message: "CampusSpace API Running",
-  });
+    res.json({
+        message: "CampusSpace API Running",
+    });
 });
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
