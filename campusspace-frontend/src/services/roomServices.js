@@ -1,7 +1,8 @@
 import axios from "axios";
 import useAuthStore from "../store/authstore";
-
-const API_URL = "http://localhost:3000/api/rooms";
+const api =
+    import.meta.env.VITE_API_URL;
+const API_URL = `${api}/api/rooms`;
 
 // GET ALL ROOMS
 export const getRooms = async() => {
