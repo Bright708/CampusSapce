@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import useAuthStore from "../../store/authstore";
 
 import JQB from "../../../public/JQBimg.jpg";
@@ -63,8 +62,8 @@ const Login = () => {
           </h2>
 
           <p className="max-w-xl text-lg leading-relaxed text-blue-100">
-            The centralized platform for students to find study spaces, book
-            resources, and navigate university life with ease.
+            The centralized platform for students to find study spaces and
+            navigate university life with ease.
           </p>
         </div>
       </motion.div>

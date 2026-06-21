@@ -55,13 +55,21 @@ export const getAllRoomsService = async () => {
     // Upcoming booking
     const upcomingBooking =
       room.bookings &&
-      room.bookings.find((booking) => {
-        if (booking.status !== "approved") return false;
+      room.bookings
+        .filter((booking) => {
+          if (booking.status !== "approved") return false;
 
-        const start = new Date(`${booking.booking_date}T${booking.start_time}`);
+          const start = new Date(
+            `${booking.booking_date}T${booking.start_time}`,
+          );
 
-        return start > now;
-      });
+          return start > now;
+        })
+        .sort(
+          (a, b) =>
+            new Date(`${a.booking_date}T${a.start_time}`) -
+            new Date(`${b.booking_date}T${b.start_time}`),
+        )[0];
 
     if (activeBooking) {
       availability = "occupied";

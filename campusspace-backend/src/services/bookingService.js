@@ -117,7 +117,7 @@ export const getUserBookingsService = async (userId) => {
     )
     .eq("user_id", userId)
     .order("created_at", {
-      ascending: false,
+      ascending: true,
     });
 
   if (error) {

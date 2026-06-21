@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Building2, Calendar, Clock3, Mail, MapPin, User } from "lucide-react";
-
+import { EventCardSkeleton } from "../../components/skeletons";
 import { getBookingById } from "../../services/bookingServices";
 
 const EventDetails = () => {

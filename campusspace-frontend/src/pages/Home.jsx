@@ -2,6 +2,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import LOGO from "../assets/LOGO.jpeg";
 import CTABanner from "../components/CTABanner";
 import Feature from "../components/Feature";
 import Footer from "../components/Footer";
@@ -28,8 +29,8 @@ const Home = () => {
       {/* NAVBAR */}
       <nav className="flex items-center justify-between py-4">
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-blue-950 sm:text-3xl lg:text-4xl">
-          CampusSpace
+        <h1 className="text-2xl flex gap-x-4 font-bold text-blue-950 sm:text-3xl lg:text-4xl">
+          <img src={LOGO} alt="" className="w-15 h-13" /> CampusSpace
         </h1>
 
         {/* Nav Links */}

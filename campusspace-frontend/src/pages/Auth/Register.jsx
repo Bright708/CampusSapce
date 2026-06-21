@@ -61,8 +61,7 @@ const Register = () => {
 
           <p className="max-w-xl text-lg leading-relaxed text-blue-100">
             Join thousands of students and faculty members in optimizing campus
-            logistics. Book rooms, find resources, and stay organized with
-            CampusSpace.
+            logistics. Book rooms, and stay organized with CampusSpace.
           </p>
         </div>
       </motion.div>

@@ -4,10 +4,9 @@ import { Outlet } from "react-router-dom";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
+import MobileSidebar from "../components/dashboard/MobileSidebar";
 import Sidebar from "../components/dashboard/Sidebar";
 import Topbar from "../components/dashboard/Topbar";
-import MobileSidebar from "../components/dashboard/MobileSidebar";
-
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,7 +22,7 @@ const DashboardLayout = () => {
       <main className="flex flex-1 flex-col">
         {/* MOBILE MENU BUTTON */}
         <div className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 lg:hidden">
-          <h1 className="text-2xl font-bold text-blue-950">CampusSpace</h1>
+          <h1 className="text-2xl  font-bold text-blue-950">CampusSpace</h1>
 
           <button
             onClick={() => setIsOpen(true)}

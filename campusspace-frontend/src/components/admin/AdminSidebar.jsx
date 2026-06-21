@@ -3,8 +3,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import PersonIcon from "@mui/icons-material/Person";
-
 import { NavLink, useNavigate } from "react-router-dom";
+import LOGO from "..//../assets/LOGO.jpeg";
 
 import { motion } from "framer-motion";
 
@@ -66,7 +66,10 @@ const AdminSidebar = () => {
       <div className="flex flex-col gap-10">
         {/* LOGO */}
         <div className="flex flex-col gap-1">
-          <h1 className="text-3xl font-bold text-blue-950">CampusSpace</h1>
+          <h1 className="text-3xl flex gap-x-2 font-bold text-blue-950">
+            <img src={LOGO} alt="" className="w-10 h-10" />
+            CampusSpace
+          </h1>
 
           <p className="text-sm font-medium text-gray-500">University Portal</p>
         </div>

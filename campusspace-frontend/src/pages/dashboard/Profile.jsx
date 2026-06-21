@@ -1,8 +1,8 @@
 import { Building2, Camera, Mail, User } from "lucide-react";
 import { useState } from "react";
+import ProfileSkeleton from "../../components/skeletons/ProfileSkeleton";
 import { updateProfile, uploadAvatar } from "../../services/profileServices";
 import useAuthStore from "../../store/authstore";
-
 const Profile = () => {
   const profile = useAuthStore((state) => state.profile);
 
@@ -48,10 +48,14 @@ const Profile = () => {
 
       const publicUrl = await uploadAvatar(file, profile.id);
 
-      setFormData({
-        ...formData,
+      const updatedProfile = await updateProfile({
         avatar_url: publicUrl,
       });
+
+      setFormData((prev) => ({
+        ...prev,
+        avatar_url: publicUrl,
+      }));
     } catch (error) {
       console.log(error);
       alert("Failed to upload image");

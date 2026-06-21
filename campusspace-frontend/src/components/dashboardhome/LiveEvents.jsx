@@ -9,11 +9,16 @@ import useAuthStore from "../../store/authstore";
 import { motion } from "framer-motion";
 
 const LiveEvents = () => {
+  const [loading, setLoading] = useState(true);
   const user = useAuthStore((state) => state.user);
 
   const [liveEvents, setLiveEvents] = useState([]);
   useEffect(() => {
     fetchEvents();
+
+    const interval = setInterval(fetchEvents, 60000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const fetchEvents = async () => {
@@ -40,6 +45,8 @@ const LiveEvents = () => {
       setLiveEvents(live);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   const getStatusStyle = () => {
@@ -62,18 +69,14 @@ const LiveEvents = () => {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {liveEvents.length === 0 ? (
           <div className="rounded-3xl bg-white p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-blue-950">
-              No Upcoming Events
-            </h2>
+            <h2 className="text-xl font-bold text-blue-950">No Live Events</h2>
 
-            <p className="mt-2 text-gray-500">
-              Event bookings will appear here.
-            </p>
+            <p className="mt-2 text-gray-500">Live Events will appear here.</p>
           </div>
         ) : (
           liveEvents.map((event, index) => (
             <motion.div
-              key={index}
+              key={event.id}
               whileHover={{
                 y: -5,
               }}
@@ -88,7 +91,7 @@ const LiveEvents = () => {
                   event.status,
                 )}`}
               >
-                Live Event
+                Live • Ends at {event.end_time}
               </div>
 
               {/* EVENT INFO */}

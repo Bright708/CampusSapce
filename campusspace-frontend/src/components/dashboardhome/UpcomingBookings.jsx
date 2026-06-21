@@ -2,9 +2,9 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getUserBookings } from "../../services/bookingServices";
 import useAuthStore from "../../store/authstore";
-
 import BookingCardSkeleton from "../skeletons/BookingCardSkeleton";
 
 const UpcomingBookings = () => {
@@ -20,9 +20,29 @@ const UpcomingBookings = () => {
   const fetchBookings = async () => {
     try {
       const data = await getUserBookings(user.id);
-      setUpcomingBookings(
-        data.filter((booking) => booking.status !== "cancelled").slice(0, 6),
-      );
+
+      const now = new Date();
+
+      const upcoming = data.bookings
+        .filter((booking) => {
+          if (booking.status === "cancelled" || booking.status === "rejected") {
+            return false;
+          }
+
+          const start = new Date(
+            `${booking.booking_date}T${booking.start_time}`,
+          );
+
+          return start > now;
+        })
+        .sort(
+          (a, b) =>
+            new Date(`${a.booking_date}T${a.start_time}`) -
+            new Date(`${b.booking_date}T${b.start_time}`),
+        )
+        .slice(0, 6);
+
+      setUpcomingBookings(upcoming);
     } catch (error) {
       console.log(error);
       setUpcomingBookings([]);
@@ -112,9 +132,13 @@ const UpcomingBookings = () => {
               </div>
 
               {/* ACTION BUTTON */}
-              <button className="mt-2 h-12 rounded-2xl bg-blue-950 text-sm font-semibold text-white transition-all duration-300 hover:opacity-80">
+
+              <Link
+                to={`events/${booking.id}`}
+                className="mt-2 h-12 rounded-2xl flex items-center justify-center bg-blue-950 text-sm font-semibold text-white transition-all duration-300 hover:opacity-80"
+              >
                 View Details
-              </button>
+              </Link>
             </motion.div>
           ))}
         </div>
