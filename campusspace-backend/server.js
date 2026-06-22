@@ -9,12 +9,22 @@ import profileRoutes from "./src/routes/profileRoutes.js";
 import roomRoutes from "./src/routes/roomRoutes.js";
 dotenv.config();
 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://campus-sapce.vercel.app",
+];
 const app = express();
 
 app.use(express.json());
 app.use(
     cors({
-        origin: true,
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
         credentials: true,
     }),
 );
