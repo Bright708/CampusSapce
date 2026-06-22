@@ -1,6 +1,6 @@
 import axios from "axios";
 const api =
-    import.meta.env.VITE_API_URL || "http://localhost:5173";
+    import.meta.env.VITE_API_URL;
 const API_URL = `${api}/api/events`;
 
 export const getEvents = async() => {
