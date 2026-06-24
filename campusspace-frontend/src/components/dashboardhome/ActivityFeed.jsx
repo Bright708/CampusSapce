@@ -40,7 +40,7 @@ const ActivityFeed = () => {
   };
 
   return (
-    <section className="flex w-full flex-col gap-6">
+    <section className="flex w-full flex-col gap-4">
       {/* HEADER */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-blue-950">Activity Feed</h1>
@@ -49,43 +49,47 @@ const ActivityFeed = () => {
       {/* ACTIVITY LIST */}
       <div className="flex flex-col gap-4">
         {activities.length === 0 ? (
-          <div className="rounded-3xl bg-white p-8 shadow-sm">
-            No recent activity.
+          <div className="rounded-2xl border border-slate-100 bg-white p-5 text-center shadow-sm">
+            <p className="font-medium text-slate-600">No recent activity</p>
+
+            <p className="mt-1 text-sm text-slate-400">
+              Notifications and booking updates will appear here.
+            </p>
           </div>
         ) : (
           activities.map((activity, index) => (
             <motion.div
-              key={index}
-              whileHover={{
-                x: 5,
-              }}
-              transition={{
-                duration: 0.2,
-              }}
-              className="flex items-start gap-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-lg"
+              key={activity.id}
+              whileHover={{ x: 3 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm hover:shadow-md"
             >
               {/* ICON */}
               <div
-                className={`flex h-14 w-14 items-center justify-center rounded-2xl ${getBackground(activity.message)}`}
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${getBackground(
+                  activity.message,
+                )}`}
               >
                 {getIcon(activity.message)}
               </div>
 
               {/* CONTENT */}
-              <div className="flex flex-1 flex-col gap-2">
-                <div className="flex items-center justify-between gap-4">
-                  <h2 className="text-lg font-bold text-blue-950">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-start justify-between gap-2">
+                  <h2 className="text-sm font-semibold text-blue-950">
                     {activity.message.includes("approved")
                       ? "Booking Approved"
-                      : "Notification"}
+                      : activity.message.includes("Event")
+                        ? "Event Update"
+                        : "Notification"}
                   </h2>
 
-                  <p className="text-sm text-gray-400">
+                  <span className="shrink-0 text-xs text-slate-400">
                     {new Date(activity.created_at).toLocaleDateString()}
-                  </p>
+                  </span>
                 </div>
 
-                <p className="text-sm leading-relaxed text-gray-600">
+                <p className="mt-1 line-clamp-2 text-sm text-slate-600">
                   {activity.description}
                 </p>
               </div>

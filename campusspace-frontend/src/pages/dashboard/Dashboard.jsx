@@ -1,14 +1,13 @@
 import { motion } from "framer-motion";
+import { CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
-import useAuthStore from "../../store/authstore";
-
 import ActivityFeed from "../../components/dashboardhome/ActivityFeed";
 import LiveEvents from "../../components/dashboardhome/LiveEvents";
 import UpcomingBookings from "../../components/dashboardhome/UpcomingBookings";
 import { getUserBookings } from "../../services/bookingServices";
 import { getNotifications } from "../../services/notificationServices";
 import { getRooms } from "../../services/roomServices";
-
+import useAuthStore from "../../store/authstore";
 const Dashboard = () => {
   const user = useAuthStore((state) => state.user);
 
@@ -60,26 +59,34 @@ const Dashboard = () => {
       transition={{
         duration: 0.5,
       }}
-      className="flex w-full flex-col gap-8"
+      className="flex w-full flex-col gap-5 md:gap-6"
     >
       {/* QUICK STATS */}
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+      <section className="grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-4">
         <motion.div
           whileHover={{ y: -5 }}
-          className="rounded-3xl bg-white p-6 shadow-sm"
+          className="rounded-3xl border border-slate-100 bg-blue-50 p-5 md:p-6 shadow-sm"
         >
-          <h2 className="text-gray-500">Total Bookings</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-medium text-blue-700">
+              Total Bookings
+            </h2>
 
-          <h1 className="mt-3 text-4xl font-bold text-blue-950">
+            <CalendarDays size={20} className="text-slate-400" />
+          </div>
+
+          <h1 className="mt-3 text-3xl font-bold text-blue-950">
             {bookings.length}
           </h1>
+
+          <p className="mt-1 text-xs text-slate-400">Your bookings</p>
         </motion.div>
 
         <motion.div
           whileHover={{ y: -5 }}
-          className="rounded-3xl bg-white p-6 shadow-sm"
+          className="rounded-3xl bg-emerald-50 p-5 md:p-6 shadow-sm"
         >
-          <h2 className="text-gray-500">Available Rooms</h2>
+          <h2 className="text-emerald-700">Available Rooms</h2>
 
           <h1 className="mt-3 text-4xl font-bold text-blue-950">
             {rooms.length}
@@ -88,9 +95,9 @@ const Dashboard = () => {
 
         <motion.div
           whileHover={{ y: -5 }}
-          className="rounded-3xl bg-white p-6 shadow-sm"
+          className="rounded-3xl bg-amber-50 p-5 md:p-6 shadow-sm"
         >
-          <h2 className="text-gray-500">Active Events</h2>
+          <h2 className="text-amber-700">Active Events</h2>
 
           <h1 className="mt-3 text-4xl font-bold text-blue-950">
             {activeEvents.length}
@@ -99,24 +106,36 @@ const Dashboard = () => {
 
         <motion.div
           whileHover={{ y: -5 }}
-          className="rounded-3xl bg-white p-6 shadow-sm"
+          className="rounded-3xl bg-red-50 p-5 md:p-6 shadow-sm"
         >
-          <h2 className="text-gray-500">Pending Requests</h2>
+          <h2 className="text-red-700">Pending Requests</h2>
 
           <h1 className="mt-3 text-4xl font-bold text-blue-950">
             {pendingBookings.length}
           </h1>
         </motion.div>
       </section>
+      <section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+        <h1 className="text-2xl font-bold text-blue-950">
+          Welcome back, {user?.user_metadata?.full_name || "Student"}
+        </h1>
 
-      {/* UPCOMING BOOKINGS */}
-      <UpcomingBookings />
+        <p className="mt-2 text-slate-500">
+          Manage your bookings, events, and room reservations from one place.
+        </p>
+      </section>
 
-      {/* LIVE EVENTS */}
+      <div className="grid gap-6 xl:grid-cols-3">
+        <div className="xl:col-span-2">
+          <UpcomingBookings />
+        </div>
+
+        <div>
+          <ActivityFeed />
+        </div>
+      </div>
+
       <LiveEvents />
-
-      {/* ACTIVITY FEED */}
-      <ActivityFeed />
     </motion.div>
   );
 };

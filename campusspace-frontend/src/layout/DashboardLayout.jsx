@@ -11,7 +11,7 @@ const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#f8fafc]">
+    <div className="flex min-h-screen bg-gray-50">
       {/* DESKTOP SIDEBAR */}
       <Sidebar />
 
