@@ -98,6 +98,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
         bg-white
         p-8
         outline-none
+        dark:bg-slate-900
       "
       overlayClassName="
         fixed inset-0
@@ -119,14 +120,18 @@ const BookingModal = ({ isOpen, onClose, room }) => {
         {/* HEADER */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-blue-950">Book Room</h1>
+            <h1 className="text-3xl font-bold text-blue-950 dark:text-slate-300">
+              Book Room
+            </h1>
 
-            <p className="mt-1 text-gray-500">{room.name}</p>
+            <p className="mt-1 text-gray-500 dark:text-slate-400">
+              {room.name}
+            </p>
           </div>
 
           <button
             onClick={onClose}
-            className="text-3xl text-gray-400 transition-all duration-300 hover:text-red-500"
+            className="text-3xl text-gray-400 transition-all duration-300 hover:text-red-500 dark:hover:text-red-400"
           >
             ×
           </button>
@@ -136,13 +141,15 @@ const BookingModal = ({ isOpen, onClose, room }) => {
         <form onSubmit={handleBooking} className="flex flex-col gap-6">
           {/* DATE */}
           <div className="flex flex-col gap-2">
-            <label className="font-semibold text-blue-950">Booking Date</label>
+            <label className="font-semibold text-blue-950 dark:text-slate-300">
+              Booking Date
+            </label>
 
             <input
               type="date"
               value={bookingDate}
               onChange={(e) => setBookingDate(e.target.value)}
-              className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
+              className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950 dark:border-slate-700 dark:text-slate-300"
             />
           </div>
           <select
@@ -154,7 +161,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
               setBookingType(value);
               setEventTitle(bookingTitles[value]);
             }}
-            className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
+            className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950 dark:border-slate-700 dark:text-slate-300"
           >
             <option value="meeting">Meeting</option>
             <option value="lecture">Lecture</option>
@@ -167,7 +174,7 @@ const BookingModal = ({ isOpen, onClose, room }) => {
               placeholder="Event Title"
               value={eventTitle}
               onChange={(e) => setEventTitle(e.target.value)}
-              className="h-12 rounded-xl border px-4"
+              className="h-12 rounded-xl border px-4 dark:border-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-950"
               required
             />
           )}
@@ -176,25 +183,29 @@ const BookingModal = ({ isOpen, onClose, room }) => {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* START */}
             <div className="flex flex-col gap-2">
-              <label className="font-semibold text-blue-950">Start Time</label>
+              <label className="font-semibold text-blue-950 dark:text-slate-300">
+                Start Time
+              </label>
 
               <input
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
+                className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950 dark:border-slate-700 dark:text-slate-300"
               />
             </div>
 
             {/* END */}
             <div className="flex flex-col gap-2">
-              <label className="font-semibold text-blue-950">End Time</label>
+              <label className="font-semibold text-blue-950 dark:text-slate-300">
+                End Time
+              </label>
 
               <input
                 type="time"
                 value={endTime}
                 onChange={(e) => setEndTime(e.target.value)}
-                className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950"
+                className="h-14 rounded-2xl border border-gray-200 px-4 outline-none focus:border-blue-950 dark:border-slate-700 dark:text-slate-300"
               />
             </div>
           </div>
@@ -218,7 +229,8 @@ const BookingModal = ({ isOpen, onClose, room }) => {
             <button
               type="button"
               onClick={onClose}
-              className="h-14 flex-1 rounded-2xl border border-gray-300 font-semibold"
+              className="h-14 flex-1 rounded-2xl border border-gray-300 font-semibold dark:border-slate-700 dark:text-slate-300
+              transition-all duration-300 hover:bg-gray-100 dark:hover:bg-slate-800"
             >
               Cancel
             </button>
@@ -226,7 +238,8 @@ const BookingModal = ({ isOpen, onClose, room }) => {
             <button
               type="submit"
               disabled={loading}
-              className="h-14 flex-1 rounded-2xl bg-blue-950 font-semibold text-white transition-all duration-300 hover:opacity-80"
+              className="h-14 flex-1 rounded-2xl bg-blue-950 font-semibold text-white transition-all duration-300 hover:opacity-80 dark:text-slate-300  dark:bg-blue-600
+              dark:hover:bg-blue-500"
             >
               {loading ? "Booking..." : "Confirm Booking"}
             </button>

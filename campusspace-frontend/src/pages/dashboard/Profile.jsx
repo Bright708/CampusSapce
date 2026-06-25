@@ -66,11 +66,13 @@ const Profile = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-4xl font-bold text-blue-950">My Profile</h1>
+      <h1 className="text-4xl font-bold text-blue-950 dark:text-slate-300">
+        My Profile
+      </h1>
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* PROFILE CARD */}
-        <div className="bg-white rounded-3xl shadow p-8 flex flex-col items-center">
+        <div className="bg-white rounded-3xl shadow p-8 flex flex-col items-center dark:bg-slate-900">
           <div className="relative">
             <img
               src={
@@ -93,21 +95,23 @@ const Profile = () => {
             </label>
           </div>
 
-          <h2 className="mt-6 text-2xl font-bold text-blue-950">
+          <h2 className="mt-6 text-2xl font-bold text-blue-950 dark:text-slate-300">
             {profile?.full_name}
           </h2>
 
-          <p className="text-gray-500">{profile?.role}</p>
+          <p className="text-gray-500 ">{profile?.role}</p>
         </div>
 
         {/* DETAILS CARD */}
-        <div className="bg-white rounded-3xl shadow p-8 lg:col-span-2">
+        <div className="bg-white rounded-3xl shadow p-8 lg:col-span-2 dark:bg-slate-900">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* NAME */}
             <div>
-              <label className="font-semibold text-blue-950">Full Name</label>
+              <label className="font-semibold text-blue-950 dark:text-slate-300">
+                Full Name
+              </label>
 
-              <div className="flex items-center gap-3 border rounded-2xl p-4 mt-2">
+              <div className="flex items-center gap-3 border rounded-2xl p-4 mt-2 border-gray-200 dark:border-slate-700 dark:text-slate-300">
                 <User size={20} />
 
                 <input
@@ -122,9 +126,11 @@ const Profile = () => {
 
             {/* EMAIL */}
             <div>
-              <label className="font-semibold text-blue-950">Email</label>
+              <label className="font-semibold text-blue-950 dark:text-slate-300">
+                Email
+              </label>
 
-              <div className="flex items-center gap-3 border rounded-2xl p-4 mt-2">
+              <div className="flex items-center gap-3 border rounded-2xl p-4 mt-2 border-gray-200 dark:border-slate-700 dark:text-slate-300">
                 <Mail size={20} />
 
                 <input
@@ -137,9 +143,11 @@ const Profile = () => {
 
             {/* DEPARTMENT */}
             <div>
-              <label className="font-semibold text-blue-950">Department</label>
+              <label className="font-semibold text-blue-950 dark:text-slate-300">
+                Department
+              </label>
 
-              <div className="flex items-center gap-3 border rounded-2xl p-4 mt-2">
+              <div className="flex items-center gap-3 border rounded-2xl p-4 mt-2 border-gray-200 dark:border-slate-700 dark:text-slate-300">
                 <Building2 size={20} />
 
                 <input
@@ -154,7 +162,8 @@ const Profile = () => {
 
             <button
               disabled={uploading}
-              className="bg-blue-950 text-white px-8 py-4 rounded-2xl hover:opacity-80 cursor-pointer"
+              className="bg-blue-950 text-white px-8 py-4 rounded-2xl hover:opacity-80 cursor-pointer dark:bg-blue-600
+              dark:hover:bg-blue-500"
             >
               {uploading ? "Uploading..." : "Save Changes"}
             </button>
