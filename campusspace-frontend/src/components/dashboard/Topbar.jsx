@@ -87,7 +87,7 @@ const Topbar = () => {
             )}
 
             {open && (
-              <div className="absolute right-0 top-12 z-50 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <div className="absolute -right-20 top-12 z-50 w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
                 <div className="border-b border-slate-100 p-4 dark:border-slate-700">
                   <h3 className="font-semibold text-blue-950 dark:text-white">
                     Notifications
