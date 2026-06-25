@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
 import ActivityFeed from "../../components/dashboardhome/ActivityFeed";
 import LiveEvents from "../../components/dashboardhome/LiveEvents";
@@ -59,73 +58,89 @@ const Dashboard = () => {
       transition={{
         duration: 0.5,
       }}
-      className="flex w-full flex-col gap-5 md:gap-6"
+      className="flex
+w-full
+flex-col
+gap-5
+md:gap-6
+transition-colors
+duration-300"
     >
       {/* QUICK STATS */}
-      <section className="grid grid-cols-2 gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <section className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         <motion.div
-          whileHover={{ y: -5 }}
-          className="rounded-3xl border border-slate-100 bg-blue-50 p-5 md:p-6 shadow-sm"
+          whileHover={{ y: -4 }}
+          className="rounded-3xl bg-gradient-to-br from-blue-950 to-blue-700 p-5 text-white shadow-lg"
         >
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-blue-700">
-              Total Bookings
-            </h2>
+          <p className="text-sm text-blue-100">Total Bookings</p>
 
-            <CalendarDays size={20} className="text-slate-400" />
-          </div>
+          <h1 className="mt-2 text-3xl font-bold">{bookings.length}</h1>
 
-          <h1 className="mt-3 text-3xl font-bold text-blue-950">
-            {bookings.length}
-          </h1>
-
-          <p className="mt-1 text-xs text-slate-400">Your bookings</p>
+          <p className="mt-3 text-xs text-blue-200">
+            Room & Event Reservations
+          </p>
         </motion.div>
 
         <motion.div
-          whileHover={{ y: -5 }}
-          className="rounded-3xl bg-emerald-50 p-5 md:p-6 shadow-sm"
+          whileHover={{ y: -4 }}
+          className="rounded-3xl bg-gradient-to-br from-emerald-600 to-teal-500 p-5 text-white shadow-lg"
         >
-          <h2 className="text-emerald-700">Available Rooms</h2>
+          <p className="text-sm text-emerald-100">Available Rooms</p>
 
-          <h1 className="mt-3 text-4xl font-bold text-blue-950">
-            {rooms.length}
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold">{rooms.length}</h1>
+
+          <p className="mt-3 text-xs text-emerald-100">Ready for booking</p>
         </motion.div>
 
         <motion.div
-          whileHover={{ y: -5 }}
-          className="rounded-3xl bg-amber-50 p-5 md:p-6 shadow-sm"
+          whileHover={{ y: -4 }}
+          className="rounded-3xl bg-gradient-to-br from-amber-500 to-orange-500 p-5 text-white shadow-lg"
         >
-          <h2 className="text-amber-700">Active Events</h2>
+          <p className="text-sm text-amber-100">Active Events</p>
 
-          <h1 className="mt-3 text-4xl font-bold text-blue-950">
-            {activeEvents.length}
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold">{activeEvents.length}</h1>
+
+          <p className="mt-3 text-xs text-amber-100">Happening on campus</p>
         </motion.div>
 
         <motion.div
-          whileHover={{ y: -5 }}
-          className="rounded-3xl bg-red-50 p-5 md:p-6 shadow-sm"
+          whileHover={{ y: -4 }}
+          className="rounded-3xl bg-gradient-to-br from-rose-500 to-red-500 p-5 text-white shadow-lg"
         >
-          <h2 className="text-red-700">Pending Requests</h2>
+          <p className="text-sm text-rose-100">Pending Requests</p>
 
-          <h1 className="mt-3 text-4xl font-bold text-blue-950">
-            {pendingBookings.length}
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold">{pendingBookings.length}</h1>
+
+          <p className="mt-3 text-xs text-rose-100">Awaiting approval</p>
         </motion.div>
       </section>
-      <section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-        <h1 className="text-2xl font-bold text-blue-950">
-          Welcome back, {user?.user_metadata?.full_name || "Student"}
+      <section
+        className="
+  rounded-3xl
+  bg-gradient-to-r
+  from-slate-50
+  to-blue-50
+  dark:from-slate-800
+  dark:to-slate-900
+  border
+  border-slate-200
+  dark:border-slate-700
+  p-6
+  shadow-sm
+"
+      >
+        <h1 className="text-3xl font-bold text-blue-950 dark:text-white">
+          Welcome back,{" "}
+          {user?.user_metadata?.full_name?.split(" ")[0] || "Student"}
         </h1>
 
-        <p className="mt-2 text-slate-500">
-          Manage your bookings, events, and room reservations from one place.
+        <p className="mt-2 text-slate-600 dark:text-slate-300">
+          Track bookings, manage events, and stay updated with everything
+          happening across campus.
         </p>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-3">
+      <div className="grid gap-4 xl:grid-cols-3">
         <div className="xl:col-span-2">
           <UpcomingBookings />
         </div>

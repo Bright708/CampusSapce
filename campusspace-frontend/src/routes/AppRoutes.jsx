@@ -19,7 +19,15 @@ import Home from "../pages/Home";
 import AdminRoute from "./AdminRoute";
 import ProtectedRoute from "./ProtectedRoute";
 
+import { useEffect } from "react";
+import useThemeStore from "../store/themeStore";
+
 const AppRoutes = () => {
+  const darkMode = useThemeStore((state) => state.darkMode);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
   return (
     <BrowserRouter>
       <Routes>

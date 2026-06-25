@@ -54,7 +54,7 @@ const useAuthStore = create((set) => ({
         success: true,
       };
     } catch (error) {
-      console.log(error);
+      lastError = error;
 
       return {
         success: false,
@@ -109,7 +109,7 @@ const useAuthStore = create((set) => ({
         role: profile ? profile.role : null,
       };
     } catch (error) {
-      console.log(error);
+      lastError = error;
 
       return {
         success: false,
