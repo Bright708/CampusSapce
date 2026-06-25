@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 const EventCard = ({ event }) => {
   return (
-    <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition">
+    <div className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition dark:bg-slate-800 dark:text-white">
       <img
         src={
           event.rooms?.image_url ||
@@ -13,14 +13,14 @@ const EventCard = ({ event }) => {
 
       <div className="p-6 flex flex-col gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-blue-950">
+          <h2 className="text-2xl font-bold text-blue-950 dark:text-white">
             {event.event_title}
           </h2>
 
           <p className="text-gray-600 mt-2">{event.event_description}</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 text-sm text-gray-600">
+        <div className="grid grid-cols-2 gap-3 text-sm text-gray-600 dark:text-white">
           <span> {event.booking_date}</span>
 
           <span>
@@ -34,15 +34,16 @@ const EventCard = ({ event }) => {
 
         <div className="border-t pt-4 flex justify-between">
           <section>
-            <p className="text-sm text-gray-500">Hosted By</p>
+            <p className="text-sm text-gray-500 dark:text-white">Hosted By</p>
 
-            <p className="font-semibold text-blue-950">
+            <p className="font-semibold text-blue-950 dark:text-white">
               {event.profiles?.full_name}
             </p>
           </section>
           <Link
             to={`/dashboard/events/${event.id}`}
-            className="bg-blue-950 text-white px-4 py-2 rounded-xl"
+            className="bg-blue-950 text-white px-4 py-2 rounded-xl  dark:bg-blue-600
+              dark:hover:bg-blue-500"
           >
             View Details
           </Link>

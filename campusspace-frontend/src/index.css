@@ -1,2 +1,70 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+/* 
+   FULLCALENDAR DARK MODE
+ */
+
+.dark .fc {
+  color: #f8fafc;
+}
+
+.dark .fc-toolbar-title {
+  color: #f8fafc;
+}
+
+.dark .fc-col-header-cell-cushion {
+  color: #f8fafc;
+}
+
+.dark .fc-daygrid-day-number {
+  color: #f8fafc;
+}
+
+.dark .fc-timegrid-axis,
+.dark .fc-timegrid-slot-label {
+  color: #cbd5e1;
+}
+
+.dark .fc-button {
+  background: #1e40af !important;
+  border: none !important;
+}
+
+.dark .fc-button:hover {
+  background: #2563eb !important;
+}
+
+.dark .fc-button-active {
+  background: #1d4ed8 !important;
+}
+
+.dark .fc-theme-standard td,
+.dark .fc-theme-standard th {
+  border-color: #334155;
+}
+
+.dark .fc-scrollgrid,
+.dark .fc-theme-standard .fc-scrollgrid {
+  border-color: #334155;
+}
+
+.dark .fc-daygrid-day {
+  background: #0f172a;
+}
+
+.dark .fc-day-today {
+  background: rgba(37, 99, 235, 0.18) !important;
+}
+
+.dark .fc-col-header {
+  background: #1e293b;
+}
+
+.dark .fc-toolbar {
+  color: white;
+}
+
+.dark .fc-event-title,
+.dark .fc-event-time {
+  color: white;
+}

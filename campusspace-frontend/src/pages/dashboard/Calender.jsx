@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
-import { getUserBookings } from "../../services/bookingServices";
+import { motion, AnimatePresence } from "framer-motion";
+
 import useAuthStore from "../../store/authstore";
+import { getUserBookings } from "../../services/bookingServices";
 
 const Calendar = () => {
   const user = useAuthStore((state) => state.user);
@@ -36,12 +38,12 @@ const Calendar = () => {
 
         backgroundColor:
           booking.status === "approved"
-            ? "#16a34a"
+            ? "#10b981"
             : booking.status === "pending"
-              ? "#eab308"
+              ? "#f59e0b"
               : booking.status === "cancelled"
-                ? "bg-red-500"
-                : "#6b7280",
+                ? "#ef4444"
+                : "#64748b",
 
         borderColor: "transparent",
 
@@ -62,13 +64,74 @@ const Calendar = () => {
     }
   };
 
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "approved":
+        return `
+          bg-emerald-100
+          text-emerald-700
+          dark:bg-emerald-900/30
+          dark:text-emerald-400
+        `;
+
+      case "pending":
+        return `
+          bg-amber-100
+          text-amber-700
+          dark:bg-amber-900/30
+          dark:text-amber-400
+        `;
+
+      case "cancelled":
+        return `
+          bg-red-100
+          text-red-700
+          dark:bg-red-900/30
+          dark:text-red-400
+        `;
+
+      default:
+        return `
+          bg-slate-100
+          text-slate-700
+          dark:bg-slate-700
+          dark:text-slate-300
+        `;
+    }
+  };
+
   return (
     <>
-      <div className="rounded-3xl bg-white p-6 shadow">
-        <h1 className="mb-8 text-3xl font-bold text-blue-950">My Calendar</h1>
+      {/* PAGE HEADER */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-blue-950 dark:text-white">
+          My Calendar
+        </h1>
 
+        <p className="mt-2 text-slate-500 dark:text-slate-400">
+          Track all your bookings and events in one place.
+        </p>
+      </div>
+
+      {/* CALENDAR CARD */}
+      <div
+        className="
+          rounded-2xl
+          border
+          border-slate-200
+          bg-white
+          p-6
+          shadow-sm
+          dark:border-slate-700
+          dark:bg-slate-800
+        "
+      >
         <FullCalendar
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          plugins={[
+            dayGridPlugin,
+            timeGridPlugin,
+            interactionPlugin,
+          ]}
           initialView="dayGridMonth"
           height="80vh"
           events={events}
@@ -83,84 +146,172 @@ const Calendar = () => {
       </div>
 
       {/* EVENT MODAL */}
-      {selectedEvent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="w-full max-w-lg rounded-3xl bg-white p-8 shadow-xl">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold text-blue-950">
-                {selectedEvent.title}
-              </h1>
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="
+              fixed
+              inset-0
+              z-50
+              flex
+              items-center
+              justify-center
+              bg-black/50
+              p-4
+            "
+          >
+            <motion.div
+              initial={{
+                scale: 0.95,
+                opacity: 0,
+              }}
+              animate={{
+                scale: 1,
+                opacity: 1,
+              }}
+              exit={{
+                scale: 0.95,
+                opacity: 0,
+              }}
+              className="
+                w-full
+                max-w-xl
+                rounded-3xl
+                bg-white
+                p-8
+                shadow-2xl
+                dark:bg-slate-800 dark:text-white
+              "
+            >
+              {/* HEADER */}
+              <div className="flex items-start justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold text-blue-950 dark:text-white">
+                    {selectedEvent.title}
+                  </h2>
 
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    Booking Details
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setSelectedEvent(null)}
+                  className="
+                    h-10
+                    w-10
+                    rounded-xl
+                    bg-slate-100
+                    text-xl
+                    dark:bg-slate-700
+                    dark:text-white
+                  "
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* CONTENT */}
+              <div className="mt-8 grid gap-5">
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Booking Type
+                  </p>
+
+                  <h3 className="font-semibold text-blue-950 dark:text-white">
+                    {selectedEvent.extendedProps.type}
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Room
+                  </p>
+
+                  <h3 className="font-semibold text-blue-950 dark:text-white">
+                    {selectedEvent.extendedProps.room}
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Building
+                  </p>
+
+                  <h3 className="font-semibold text-blue-950 dark:text-white">
+                    {selectedEvent.extendedProps.building}
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Date
+                  </p>
+
+                  <h3 className="font-semibold text-blue-950 dark:text-white">
+                    {selectedEvent.extendedProps.date}
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Time
+                  </p>
+
+                  <h3 className="font-semibold text-blue-950 dark:text-white">
+                    {selectedEvent.extendedProps.start_time} -{" "}
+                    {selectedEvent.extendedProps.end_time}
+                  </h3>
+                </div>
+
+                <div>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                    Status
+                  </p>
+
+                  <span
+                    className={`
+                      inline-flex
+                      rounded-full
+                      px-3
+                      py-1
+                      text-sm
+                      font-semibold
+                      ${getStatusStyle(
+                        selectedEvent.extendedProps.status,
+                      )}
+                    `}
+                  >
+                    {selectedEvent.extendedProps.status.toUpperCase()}
+                  </span>
+                </div>
+              </div>
+
+              {/* FOOTER */}
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="text-2xl text-gray-500"
+                className="
+                  mt-8
+                  h-12
+                  w-full
+                  rounded-xl
+                  bg-blue-950
+                  font-semibold
+                  text-white
+                  transition-all
+                  hover:opacity-90
+                  dark:bg-blue-600
+                "
               >
-                ×
+                Close
               </button>
-            </div>
-
-            <div className="mt-6 space-y-4">
-              <div>
-                <p className="text-sm text-gray-500">Booking Type</p>
-
-                <h2 className="font-semibold text-blue-950">
-                  {selectedEvent.extendedProps.type}
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Room</p>
-
-                <h2 className="font-semibold text-blue-950">
-                  {selectedEvent.extendedProps.room}
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Building</p>
-
-                <h2 className="font-semibold text-blue-950">
-                  {selectedEvent.extendedProps.building}
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Date</p>
-
-                <h2 className="font-semibold text-blue-950">
-                  {selectedEvent.extendedProps.date}
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Time</p>
-
-                <h2 className="font-semibold text-blue-950">
-                  {selectedEvent.extendedProps.start_time} -{" "}
-                  {selectedEvent.extendedProps.end_time}
-                </h2>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Status</p>
-
-                <span
-                  className={`rounded-full ${selectedEvent.extendedProps.status === "cancelled" ? "bg-red-500/50" : "bg-green-500/50"} px-4 py-2 text-sm font-semibold text-black`}
-                >
-                  {selectedEvent.extendedProps.status.toUpperCase()}
-                </span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setSelectedEvent(null)}
-              className="mt-8 h-12 w-full rounded-2xl bg-blue-950 font-semibold text-white transition-all duration-300 hover:opacity-80"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
