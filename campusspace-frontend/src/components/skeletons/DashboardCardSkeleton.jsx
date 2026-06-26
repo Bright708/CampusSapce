@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 const DashboardCardSkeleton = () => {
   return (
-    <div className="rounded-3xl bg-white p-6 shadow-sm">
+    <div className="rounded-3xl bg-white p-6 shadow-sm dark:bg-slate-900">
       <div className="mb-3">
         <Skeleton width={120} height={14} />
       </div>

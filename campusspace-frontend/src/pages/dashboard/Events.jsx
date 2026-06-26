@@ -24,6 +24,13 @@ const Events = () => {
 
     fetchEvents();
   }, []);
+  const now = new Date();
+
+  const liveEvents = events.filter((event) => {
+    const end = new Date(`${event.booking_date}T${event.end_time}`);
+
+    return end > now;
+  });
 
   if (loading) {
     return (
@@ -72,8 +79,6 @@ const Events = () => {
             dark:bg-slate-800
           "
         >
-          
-
           <h2 className="text-2xl font-semibold text-blue-950 dark:text-white">
             No Upcoming Events
           </h2>
@@ -84,7 +89,7 @@ const Events = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {events.map((event) => (
+          {liveEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>

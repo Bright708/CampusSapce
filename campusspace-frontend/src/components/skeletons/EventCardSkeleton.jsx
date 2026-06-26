@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 const EventCardSkeleton = () => {
   return (
-    <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
+    <div className="bg-white rounded-3xl shadow-lg overflow-hidden dark:bg-slate-900">
       <Skeleton height={224} />
       <div className="p-6 flex flex-col gap-4">
         <div>

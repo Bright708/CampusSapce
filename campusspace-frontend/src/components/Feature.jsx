@@ -10,21 +10,36 @@ const Feature = () => {
       title: "One-Click Booking",
       description:
         "Find and reserve a study room in under 5 seconds. Intelligent suggestions based on your schedule.",
-      icon: <AdsClickIcon fontSize="large" className="text-blue-950" />,
+      icon: (
+        <AdsClickIcon
+          fontSize="large"
+          className="text-blue-950 dark:text-slate-100"
+        />
+      ),
     },
 
     {
       title: "Smart Calendar Sync",
       description:
         "Automatically organize schedules and reduce booking conflicts across campus.",
-      icon: <SyncIcon fontSize="large" className="text-blue-950" />,
+      icon: (
+        <SyncIcon
+          fontSize="large"
+          className="text-blue-950 dark:text-slate-100"
+        />
+      ),
     },
 
     {
       title: "Real-Time Availability",
       description:
         "Live occupancy data ensures you never walk to a booked room that is actually empty.",
-      icon: <VisibilityIcon fontSize="large" className="text-blue-950" />,
+      icon: (
+        <VisibilityIcon
+          fontSize="large"
+          className="text-blue-950 dark:text-slate-100"
+        />
+      ),
     },
   ];
 
@@ -34,7 +49,7 @@ const Feature = () => {
       id="features"
     >
       {/* Background Blur */}
-      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-violet-300/20 blur-3xl" />
+      <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl dark:bg-slate-700/20" />
 
       {/* Heading */}
       <motion.div
@@ -44,11 +59,11 @@ const Feature = () => {
         viewport={{ once: true }}
         className="z-10 flex flex-col gap-4"
       >
-        <h1 className="text-3xl font-bold text-blue-950 sm:text-4xl lg:text-5xl">
+        <h1 className="text-3xl font-bold text-blue-950 sm:text-4xl lg:text-5xl dark:text-slate-100">
           Designed for Efficiency
         </h1>
 
-        <h2 className="max-w-3xl text-base font-medium leading-relaxed text-gray-700 sm:text-lg lg:text-xl">
+        <h2 className="max-w-3xl text-base font-medium leading-relaxed text-gray-700 sm:text-lg lg:text-xl dark:text-slate-400">
           We've automated the friction out of campus coordination so you can
           focus on what matters most.
         </h2>
@@ -70,20 +85,20 @@ const Feature = () => {
               y: -10,
               scale: 1.02,
             }}
-            className="group flex flex-col gap-5 rounded-3xl border border-white/20 bg-white/70 p-8 shadow-md backdrop-blur-md transition-all duration-300"
+            className="group flex flex-col gap-5 rounded-3xl border border-white/20 bg-white/70 p-8 shadow-md backdrop-blur-md transition-all duration-300 dark:bg-slate-800/70 dark:shadow-slate-800/50 dark:backdrop-blur-sm"
           >
             {/* Icon */}
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 transition-all duration-300 group-hover:scale-110 group-hover:bg-violet-100">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 transition-all duration-300 group-hover:scale-110 group-hover:bg-violet-100 dark:bg-slate-800 dark:group-hover:bg-slate-700 dark:border-slate-700">
               {feature.icon}
             </div>
 
             {/* Title */}
-            <h3 className="text-2xl font-semibold text-blue-950">
+            <h3 className="text-2xl font-semibold text-blue-950 dark:text-slate-100">
               {feature.title}
             </h3>
 
             {/* Description */}
-            <p className="text-base leading-relaxed text-gray-700">
+            <p className="text-base leading-relaxed text-gray-700 dark:text-slate-400">
               {feature.description}
             </p>
           </motion.div>

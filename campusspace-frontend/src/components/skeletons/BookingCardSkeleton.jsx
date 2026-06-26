@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 const BookingCardSkeleton = () => {
   return (
-    <div className="flex flex-col gap-5 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300">
+    <div className="flex flex-col gap-5 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-300 dark:bg-slate-900 dark:border-slate-700">
       <div className="w-fit">
         <Skeleton width={100} height={26} borderRadius={9999} />
       </div>

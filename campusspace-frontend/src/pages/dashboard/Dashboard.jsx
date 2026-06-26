@@ -14,10 +14,19 @@ const Dashboard = () => {
   const [rooms, setRooms] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
-  const activeEvents = bookings.filter(
-    (booking) =>
-      booking.booking_type === "event" && booking.status === "approved",
-  );
+  const now = new Date();
+
+  const activeEvents = bookings.filter((booking) => {
+    if (booking.booking_type !== "event" || booking.status !== "approved") {
+      return false;
+    }
+
+    const start = new Date(`${booking.booking_date}T${booking.start_time}`);
+
+    const end = new Date(`${booking.booking_date}T${booking.end_time}`);
+
+    return now >= start && now <= end;
+  });
 
   const pendingBookings = bookings.filter(
     (booking) => booking.status === "pending",

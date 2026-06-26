@@ -28,8 +28,8 @@ const EventDetails = () => {
     return (
       <div className="flex flex-col gap-8">
         <div>
-          <div className="h-12 w-96 rounded-2xl bg-white" />
-          <div className="mt-3 h-5 w-48 rounded-2xl bg-white" />
+          <div className="h-12 w-96 rounded-2xl bg-white dark:bg-slate-900" />
+          <div className="mt-3 h-5 w-48 rounded-2xl bg-white dark:bg-slate-900" />
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
           <div>
@@ -47,36 +47,40 @@ const EventDetails = () => {
     <div className="flex flex-col gap-8">
       {/* HEADER */}
       <div>
-        <h1 className="text-4xl font-bold text-blue-950">
+        <h1 className="text-4xl font-bold text-blue-950 dark:text-slate-100">
           {event.event_title}
         </h1>
 
-        <p className="text-gray-500 mt-2">Event Details</p>
+        <p className="text-gray-500 mt-2 dark:text-slate-400">Event Details</p>
       </div>
 
       {/* GRID */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* EVENT CARD */}
-        <div className="bg-white rounded-3xl shadow p-6 h-auto">
-          <h2 className="font-bold text-2xl text-blue-950 mb-6">
+        <div className="bg-white rounded-3xl shadow p-6 h-auto dark:bg-slate-900">
+          <h2 className="font-bold text-2xl text-blue-950 mb-6 dark:text-slate-100">
             Event Information
           </h2>
 
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <Calendar className="text-blue-950" />
+              <Calendar className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Event Type</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Event Type
+                </p>
 
-                <h3 className="font-semibold capitalize">
+                <h3 className="font-semibold capitalize dark:text-slate-100">
                   {event.booking_type}
                 </h3>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-gray-400 text-sm">Status</p>
+              <p className="text-gray-400 text-sm dark:text-slate-400">
+                Status
+              </p>
 
               <span className="bg-green-100 text-green-600 px-4 py-2 rounded-xl">
                 {event.status}
@@ -86,54 +90,72 @@ const EventDetails = () => {
         </div>
 
         {/* LOCATION CARD */}
-        <div className="bg-white rounded-3xl shadow p-6">
-          <h2 className="font-bold text-2xl text-blue-950 mb-6">Location</h2>
+        <div className="bg-white rounded-3xl shadow p-6 dark:bg-slate-900">
+          <h2 className="font-bold text-2xl text-blue-950 mb-6 dark:text-slate-100">
+            Location
+          </h2>
 
           <div className="space-y-5">
             <div className="flex gap-3">
-              <MapPin className="text-blue-950" />
+              <MapPin className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Room</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Room
+                </p>
 
-                <h3 className="font-semibold">{event.rooms.name}</h3>
+                <h3 className="font-semibold dark:text-slate-100">
+                  {event.rooms.name}
+                </h3>
               </div>
             </div>
 
             <div className="flex gap-3">
-              <Building2 className="text-blue-950" />
+              <Building2 className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Building</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Building
+                </p>
 
-                <h3 className="font-semibold">{event.rooms.building}</h3>
+                <h3 className="font-semibold dark:text-slate-100">
+                  {event.rooms.building}
+                </h3>
               </div>
             </div>
           </div>
         </div>
 
         {/* SCHEDULE CARD */}
-        <div className="bg-white rounded-3xl shadow p-6">
-          <h2 className="font-bold text-2xl text-blue-950 mb-6">Schedule</h2>
+        <div className="bg-white rounded-3xl shadow p-6 dark:bg-slate-900">
+          <h2 className="font-bold text-2xl text-blue-950 mb-6 dark:text-slate-100">
+            Schedule
+          </h2>
 
           <div className="space-y-5">
             <div className="flex gap-3">
-              <Calendar className="text-blue-950" />
+              <Calendar className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Date</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Date
+                </p>
 
-                <h3 className="font-semibold">{event.booking_date}</h3>
+                <h3 className="font-semibold dark:text-slate-100">
+                  {event.booking_date}
+                </h3>
               </div>
             </div>
 
             <div className="flex gap-3">
-              <Clock3 className="text-blue-950" />
+              <Clock3 className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Time</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Time
+                </p>
 
-                <h3 className="font-semibold">
+                <h3 className="font-semibold dark:text-slate-100">
                   {event.start_time} - {event.end_time}
                 </h3>
               </div>
@@ -142,27 +164,37 @@ const EventDetails = () => {
         </div>
 
         {/* ORGANIZER CARD */}
-        <div className="bg-white rounded-3xl shadow p-6">
-          <h2 className="font-bold text-2xl text-blue-950 mb-6">Organizer</h2>
+        <div className="bg-white rounded-3xl shadow p-6 dark:bg-slate-900">
+          <h2 className="font-bold text-2xl text-blue-950 mb-6 dark:text-slate-100">
+            Organizer
+          </h2>
 
           <div className="space-y-5">
             <div className="flex gap-3">
-              <User className="text-blue-950" />
+              <User className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Name</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Name
+                </p>
 
-                <h3 className="font-semibold">{event.profiles.full_name}</h3>
+                <h3 className="font-semibold dark:text-slate-100">
+                  {event.profiles.full_name}
+                </h3>
               </div>
             </div>
 
             <div className="flex gap-3">
-              <Mail className="text-blue-950" />
+              <Mail className="text-blue-950 dark:text-slate-100" />
 
               <div>
-                <p className="text-gray-400 text-sm">Email</p>
+                <p className="text-gray-400 text-sm dark:text-slate-400">
+                  Email
+                </p>
 
-                <h3 className="font-semibold">{event.profiles.email}</h3>
+                <h3 className="font-semibold dark:text-slate-100">
+                  {event.profiles.email}
+                </h3>
               </div>
             </div>
           </div>

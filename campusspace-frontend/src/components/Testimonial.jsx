@@ -7,7 +7,7 @@ const Testimonial = () => {
       id="testimonials"
     >
       {/* Background Glow */}
-      <div className="absolute left-0 top-20 h-72 w-72 rounded-full bg-violet-300/20 blur-3xl" />
+      <div className="absolute left-0 top-20 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl dark:bg-slate-400/20" />
 
       {/* Heading */}
       <motion.div
@@ -17,11 +17,11 @@ const Testimonial = () => {
         viewport={{ once: true }}
         className="z-10 text-center"
       >
-        <h1 className="text-3xl font-bold text-blue-950 sm:text-4xl lg:text-6xl">
+        <h1 className="text-3xl font-bold text-blue-950 sm:text-4xl lg:text-6xl dark:text-slate-100">
           Trusted by Scholars
         </h1>
 
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-700 sm:text-lg">
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-gray-700 sm:text-lg dark:text-slate-100">
           Students and faculty across campus rely on CampusSpace to simplify
           bookings and coordination.
         </p>
@@ -40,7 +40,7 @@ const Testimonial = () => {
             y: -10,
             scale: 1.02,
           }}
-          className="group flex flex-col justify-between gap-6 rounded-3xl border border-white/20 bg-white/70 p-8 shadow-md backdrop-blur-md transition-all duration-300 hover:shadow-2xl"
+          className="group flex flex-col justify-between gap-6 rounded-3xl border border-white/20 bg-white/70 p-8 shadow-md backdrop-blur-md transition-all duration-300 hover:shadow-2xl dark:bg-slate-900/70 dark:shadow-slate-600/50 dark:hover:bg-slate-800/70 dark:hover:shadow-slate-600/50 dark:text-slate-100"
         >
           NO TESTIMONIALS YET
         </motion.div>

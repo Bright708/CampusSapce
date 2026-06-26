@@ -8,7 +8,7 @@ const ProfileSkeleton = () => {
       </h1>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="bg-white rounded-3xl shadow p-8 flex flex-col items-center">
+        <div className="bg-white rounded-3xl shadow p-8 flex flex-col items-center dark:bg-slate-900">
           <Skeleton circle width={144} height={144} />
           <div className="mt-6">
             <Skeleton width={180} height={30} />
@@ -18,7 +18,7 @@ const ProfileSkeleton = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow p-8 lg:col-span-2">
+        <div className="bg-white rounded-3xl shadow p-8 lg:col-span-2 dark:bg-slate-900">
           <div className="space-y-6">
             <Skeleton width={140} height={16} />
             <Skeleton height={52} borderRadius={16} />

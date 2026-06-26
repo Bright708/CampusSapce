@@ -2,7 +2,7 @@ import Skeleton from "react-loading-skeleton";
 
 const RoomCardSkeleton = () => {
   return (
-    <div className="overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300">
+    <div className="overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 dark:bg-slate-900">
       <Skeleton height={224} />
       <div className="flex flex-col gap-4 p-5">
         <div className="flex flex-col gap-1">

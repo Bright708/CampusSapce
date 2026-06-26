@@ -4,9 +4,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import EventIcon from "@mui/icons-material/Event";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-
 import { motion } from "framer-motion";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 import LOGO from "../../assets/LOGO.jpeg";
 
@@ -64,12 +63,13 @@ const Sidebar = () => {
           {" "}
           <div className="flex items-center gap-3">
             {" "}
-            <img
-              src={LOGO}
-              alt="CampusSpace"
-              className="h-10 w-10 rounded-xl object-cover"
-            />
-            ```
+            <Link to="/">
+              <img
+                src={LOGO}
+                alt="CampusSpace"
+                className="h-10 w-10 rounded-xl object-cover"
+              />
+            </Link>
             <div>
               <h1 className="text-xl font-bold text-blue-950 dark:text-white">
                 CampusSpace
@@ -90,7 +90,7 @@ const Sidebar = () => {
             ${
               isActive
                 ? "bg-blue-950 text-white"
-                : "text-slate-600 hover:bg-slate-100 hover:text-blue-950 dark:text-slate-300 dark:hover:bg-slate-800"
+                : "text-slate-600 hover:bg-slate-100 hover:text-blue-950 dark:text-slate-300 dark:hover:bg-slate-500"
             }`
               }
             >
